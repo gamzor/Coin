@@ -1,0 +1,63 @@
+<?php
+/** @var \Kirill\Coins\Block\Coins\History $block */
+?>
+
+<?php
+$collection = $block->getCollection();
+?>
+<div class="table-wrapper orders-history">
+    <table class="data table table-order-items history" id="my-orders-table">
+        <caption class="table-caption"><?= $block->escapeHtml(__('Coins')) ?></caption>
+        <tbody>
+        <tr>
+            <th scope="col" class="col id"><?= $block->escapeHtml(__('Total = ')) ?>
+                <?php if ($collection->getSize() > 0) : ?>
+                    <?php $size = $collection->getSize();
+                    $c = 0;
+                    $total = 0; ?>
+                    <?php foreach ($collection as $item): ?>
+                        <?php $sum = $item->getCoins();
+                        $total += $sum; ?>
+                    <?php endforeach; ?>
+                    <?= $total ?>
+                <?php endif; ?>
+            </th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-wrapper orders-history">
+    <table class="data table table-order-items history" id="my-orders-table">
+        <caption class="table-caption"><?= $block->escapeHtml(__('Coins')) ?></caption>
+        <thead>
+        <tr>
+            <th scope="col" class="col id"><?= $block->escapeHtml(__('Transaction Id')) ?></th>
+            <th scope="col" class="col date"><?= $block->escapeHtml(__('Comment')) ?></th>
+            <th scope="col" class="col total"><?= $block->escapeHtml(__('Coins')) ?></th>
+            <th scope="col" class="col status"><?= $block->escapeHtml(__('Insertion Date')) ?></th>
+            <th scope="col" class="col status"><?= $block->escapeHtml(__('Expiry Date')) ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($collection as $item): ?>
+            <tr>
+                <td data-th="<?= $block->escapeHtml(__('ID')) ?>" class="col id">
+                    <?= $item->getId(); ?>
+                </td>
+                <td data-th="<?= $block->escapeHtml(__('Comment')) ?>" class="col coins">
+                    <?= $item->getComment(); ?>
+                </td>
+                <td data-th="<?= $block->escapeHtml(__('Coins')) ?>" class="col id">
+                    <?= $item->getCoins(); ?>
+                </td>
+                <td data-th="<?= $block->escapeHtml(__('Insertion Date')) ?>" class="col coins">
+                    <?= $item->getInsertionDate(); ?>
+                </td>
+                <td data-th="<?= $block->escapeHtml(__('Expiry Date')) ?>" class="col coins">
+                    <?= $item->getExpiryDate(); ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
