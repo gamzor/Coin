@@ -11,6 +11,7 @@ $collection = $block->getCollection();
         <tbody>
         <tr>
             <th scope="col" class="col id"><?= $block->escapeHtml(__('Total = ')) ?>
+                <?= $value = $block->getCoinsValue() ?>
                 <?php if ($collection->getSize() > 0) : ?>
                     <?php $size = $collection->getSize();
                     $c = 0;

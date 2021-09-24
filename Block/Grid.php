@@ -16,7 +16,7 @@ class Grid extends Template implements ArgumentInterface
      * @var \Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory
      */
     private $collectionFactory;
-
+    protected $_session;
     /**
      * Grid constructor.
      * @param Template\Context $context
@@ -26,13 +26,22 @@ class Grid extends Template implements ArgumentInterface
     public function __construct(
         Context           $context,
         CollectionFactory $collectionFactory,
+        \Magento\Customer\Model\Session $session,
         array             $data = []
+
     )
     {
         $this->collectionFactory = $collectionFactory;
         parent::__construct($context, $data);
+        $this->_session = $session;
     }
+    public function getCustomer()
+    {
+        echo $this->_session->getCustomer()->getId(); //Print current customer ID
 
+        $customerData = $this->_session->getCustomer();
+        print_r($customerData->getData()); //Print current Customer Data
+    }
     /**
      * Get collection of books
      *

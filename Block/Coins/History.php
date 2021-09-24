@@ -47,8 +47,9 @@ class History extends Template implements ArgumentInterface
         //@todo create logic for getting all records from database
         return $this->collectionFactory->create();
     }
-    public function getCustomer()
+
+    public function getCoinsValue()
     {
-        echo $this->customerSession->getCustomer()->getId(); //Print current customer ID
+        return $this->customerSession->getCustomer()->getData('coins')->getValue(); //Print current customer ID
     }
 }
