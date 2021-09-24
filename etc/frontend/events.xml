@@ -1,8 +1,6 @@
+<?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-    <event name="controller_action_predispatch_checkout_onepage_index">
-        <observer name="kirill_coins_checkout_submit_before" instance="Kirill\Coins\Observer\ProcessOrder" />
-    </event>
-    <event name="checkout_cart_product_add_after">
-        <observer name="after_add_cart" instance="Kirill\Coins\Observer\AfterAddCart" />
+    <event name="checkout_onepage_controller_success_action">
+        <observer name="kirill_coins_sales_order_place_after" instance="Kirill\Coins\Observer\ProOrder" />
     </event>
 </config>
