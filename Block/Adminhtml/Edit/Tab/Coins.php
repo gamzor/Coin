@@ -85,7 +85,7 @@ class Coins  extends \Magento\Framework\View\Element\Template implements TabInte
     public function getTabUrl()
     {
         //replace the tab with the url you want
-        return $this->getUrl('coins/*/coins', ['_current' => true]);
+        return $this->getUrl('coins/*/custom', ['_current' => true]);
     }
     /**
      * Tab should be loaded trough Ajax call

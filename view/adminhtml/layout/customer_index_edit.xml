@@ -2,16 +2,11 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="customer_form">
-            <block class="Kirill\Coins\Block\Adminhtml\Edit\Tab\Coins" name="customer_edit_tab_coins">
+            <block class="Kirill\Coins\Block\Adminhtml\Edit\Tab\Coins" name="customer_edit_tab">
                 <action method="setTabLabel">
                     <argument name="label" xsi:type="string">Coins</argument>
                 </action>
             </block>
-            <referenceBlock name="content">
-                <block class="Kirill\Coins\Block\Adminhtml\Edit\Tab\Coins">
-                    <uiComponent name="customer_coins_form"/>
-                </block>
-            </referenceBlock>
         </referenceBlock>
     </body>
 </page>
