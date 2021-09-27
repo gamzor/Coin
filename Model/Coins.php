@@ -7,6 +7,7 @@ class Coins extends \Magento\Framework\Model\AbstractModel implements \Magento\F
     protected $_cacheTag = 'coins';
 
     protected $_eventPrefix = 'coins';
+    private $coinsFactory;
 
     protected function _construct()
     {
@@ -23,5 +24,9 @@ class Coins extends \Magento\Framework\Model\AbstractModel implements \Magento\F
         $values = [];
 
         return $values;
+    }
+    public function getNewInstance()
+    {
+        return $this->booksFactory->create();
     }
 }

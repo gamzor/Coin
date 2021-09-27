@@ -6,7 +6,7 @@
     </head>
     <body>
         <referenceBlock name="customer_account_navigation">
-            <block class="Magento\Customer\Block\Account\SortLinkInterface" ifconfig="crumbs/general/active" name="customer-account-navigation-coin-link"
+            <block class="Magento\Customer\Block\Account\SortLinkInterface" ifconfig="coins/general/active" name="customer-account-navigation-coin-link"
                    template="Kirill_Coins::coin.phtml"/>
             <arguments>
                 <argument name="path" xsi:type="string">coins/history</argument>

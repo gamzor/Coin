@@ -30,6 +30,18 @@ class InstallSchema implements InstallSchemaInterface
                 ['identity' => true, 'nullable' => false, 'primary' => true],
                 'ID'
             )->addColumn(
+                'order_id',
+                Table::TYPE_INTEGER,
+                null,
+                ['nullable' => false],
+                'ORDER ID'
+            )->addColumn(
+                'customer_id',
+                Table::TYPE_INTEGER,
+                null,
+                ['nullable' => false],
+                'Customer ID'
+            )->addColumn(
                 'comment',
                 Table::TYPE_INTEGER,
                 255,
@@ -46,13 +58,7 @@ class InstallSchema implements InstallSchemaInterface
                 Table::TYPE_TIMESTAMP,
                 null,
                 ['nullable' => false, 'default' => Table::TIMESTAMP_INIT],
-                'Insertion Date'
-            )->addColumn(
-                'expiry_date',
-                Table::TYPE_TIMESTAMP,
-                null,
-                ['nullable' => false, 'default' => Table::TIMESTAMP_INIT_UPDATE],
-                'Expiry Date')
+                'Insertion Date')
 
                 ->setComment('Coins');
             $installer->getConnection()->createTable($table);
