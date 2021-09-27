@@ -3,7 +3,7 @@
 namespace Kirill\Coins\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
-use Kirill\Coins\Model\Coins;
+use Kirill\Coins\Model\ResourceModel\Coins;
 class ProOrder implements ObserverInterface
 {
     /**
@@ -13,42 +13,40 @@ class ProOrder implements ObserverInterface
      */
     protected $order;
     protected $coins;
-    /**
-     * @var Coins
-     */
-    protected $coinsmodel;
-
+    protected $model;
     public function __construct(
         \Magento\Sales\Model\Order $order,
-        \Kirill\Coins\Model\ResourceModel\Coins $coins,
+        Coins $coins,
+        Coins $model,
+        \Kirill\Coins\Model\CoinsFactory $dataFactory,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface,
-        Coins $coinsmodel
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface
     )
     {
         $this->order = $order;
         $this->coins = $coins;
+        $this->_dataFactory = $dataFactory;
         $this->resultPageFactory = $resultPageFactory;
         $this->_customerRepositoryInterface = $customerRepositoryInterface;
-        $this->coin = $coinsmodel;
     }
 
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        $order = $observer->getEvent()->getOrder()->getGrandTotal();
+        $order = $observer->getEvent()->getOrder()->getSubtotal();
         $customerId = $observer->getEvent()->getOrder()->getCustomerId();
         $orderId = $observer->getEvent()->getOrder()->getId();
-        $coins = $order/10;
+        $bonuscoins = (int)$order/10;
         if ($customerId) {
-
+            $savedata = $this->_dataFactory->create();
+            $savedata ->addData(['coins'=>$bonuscoins,'order_id'=>$orderId,'customer_id'=>$customerId])->save();
+            if($savedata){
+                print_r("Coins Save!");
+            }
             $customer = $this->_customerRepositoryInterface->getById($customerId);
-            $customer->setCustomAttribute('coins', $coins);
+            $customer->setCustomAttribute('coins', $bonuscoins);
             $this->_customerRepositoryInterface->save($customer);
-            $coin = $coins;
-            $this->coin->save();
 
         }
-        print_r("Catched event succssfully !");
         exit;
     }
 }

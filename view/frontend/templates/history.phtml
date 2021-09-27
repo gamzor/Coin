@@ -33,10 +33,10 @@ $collection = $block->getCollection();
         <thead>
         <tr>
             <th scope="col" class="col id"><?= $block->escapeHtml(__('Transaction Id')) ?></th>
+            <th scope="col" class="col date"><?= $block->escapeHtml(__('Order ID')) ?></th>
             <th scope="col" class="col date"><?= $block->escapeHtml(__('Comment')) ?></th>
             <th scope="col" class="col total"><?= $block->escapeHtml(__('Coins')) ?></th>
             <th scope="col" class="col status"><?= $block->escapeHtml(__('Insertion Date')) ?></th>
-            <th scope="col" class="col status"><?= $block->escapeHtml(__('Expiry Date')) ?></th>
         </tr>
         </thead>
         <tbody>
@@ -45,17 +45,17 @@ $collection = $block->getCollection();
                 <td data-th="<?= $block->escapeHtml(__('ID')) ?>" class="col id">
                     <?= $item->getId(); ?>
                 </td>
+                <td data-th="<?= $block->escapeHtml(__('Order ID')) ?>" class="col order_id">
+                    <?= $item->getOrderId(); ?>
+                </td>
                 <td data-th="<?= $block->escapeHtml(__('Comment')) ?>" class="col coins">
                     <?= $item->getComment(); ?>
                 </td>
                 <td data-th="<?= $block->escapeHtml(__('Coins')) ?>" class="col id">
                     <?= $item->getCoins(); ?>
                 </td>
-                <td data-th="<?= $block->escapeHtml(__('Insertion Date')) ?>" class="col coins">
+                <td data-th="<?= $block->escapeHtml(__('Date')) ?>" class="col coins">
                     <?= $item->getInsertionDate(); ?>
-                </td>
-                <td data-th="<?= $block->escapeHtml(__('Expiry Date')) ?>" class="col coins">
-                    <?= $item->getExpiryDate(); ?>
                 </td>
             </tr>
         <?php endforeach; ?>

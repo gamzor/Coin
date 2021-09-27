@@ -55,10 +55,6 @@ class InstallData implements InstallDataInterface
         $attributeSet = $this->attributeSetFactory->create();
         $attributeGroupId = $attributeSet->getDefaultGroupId($attributeSetId);
 
-        // The telephone is the attribute code
-        // The types are supported as: datetime, decimal, int, text, varchar
-        // The sort order will be position this attribute will be displayed
-        // We add this attribute before the Email field so I set it to 79
         $customerSetup->addAttribute(Customer::ENTITY, 'coins', [
             'type' => 'text',
             'label' => 'Coins',
