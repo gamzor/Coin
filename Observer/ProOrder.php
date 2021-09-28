@@ -38,15 +38,11 @@ class ProOrder implements ObserverInterface
         $bonuscoins = (int)$order/10;
         if ($customerId) {
             $savedata = $this->_dataFactory->create();
-            $savedata ->addData(['coins'=>$bonuscoins,'order_id'=>$orderId,'customer_id'=>$customerId])->save();
-            if($savedata){
-                print_r("Coins Save!");
-            }
+            $savedata ->addData(['coins'=>$bonuscoins,'order_id'=>$orderId,'customer_id'=>$customerId,'comment'=>'Earn Coins from Order'])->save();
             $customer = $this->_customerRepositoryInterface->getById($customerId);
             $customer->setCustomAttribute('coins', $bonuscoins);
             $this->_customerRepositoryInterface->save($customer);
 
         }
-        exit;
     }
 }

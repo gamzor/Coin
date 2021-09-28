@@ -4,11 +4,11 @@ namespace Kirill\Coins\Block\Adminhtml\Edit\Tab\View;
 
 use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Helper\Data;
-use Magento\Customer\Controller\RegistryConstants;
 use Magento\Framework\Registry;
 use Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory;
+use \Magento\Framework\Data\FormFactory;
 
-class Custom extends \Magento\Backend\Block\Widget\Grid\Extended
+class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 {
     protected $_coreRegistry = null;
 
@@ -19,10 +19,12 @@ class Custom extends \Magento\Backend\Block\Widget\Grid\Extended
         Data              $backendHelper,
         CollectionFactory $collectionFactory,
         Registry          $coreRegistry,
+        FormFactory       $formFactory,
         array             $data = []
     )
     {
         $this->_coreRegistry = $coreRegistry;
+        $this->_formFactory = $formFactory;
         $this->_collectionFactory = $collectionFactory;
         parent::__construct($context, $backendHelper, $data);
     }
@@ -44,8 +46,6 @@ class Custom extends \Magento\Backend\Block\Widget\Grid\Extended
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
-
-
     protected function _prepareColumns()
     {
         $this->addColumn(
@@ -64,6 +64,7 @@ class Custom extends \Magento\Backend\Block\Widget\Grid\Extended
             [
                 'header' => __('Coins'),
                 'index' => 'coins',
+                'renderer' => 'Kirill\Coins\Block\Adminhtml\Edit\Tab\Renderer\Balance'
             ]
         );
         $this->addColumn(
@@ -93,8 +94,4 @@ class Custom extends \Magento\Backend\Block\Widget\Grid\Extended
         return $this->getUrl('catalog/product/edit', ['id' => $row->getProductId()]);
     }
 
-    public function getTitle()
-    {
-        return $this->pageTitle->getShort();
-    }
 }

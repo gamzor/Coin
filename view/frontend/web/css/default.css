@@ -10,10 +10,10 @@
 }
 .product-icons:hover  {
     text-shadow:
-        1px 1px 0 yellowgreen,
-        1px -1px 0 yellowgreen,
-        -1px 1px 0 yellowgreen,
-        -1px -1px 0 yellowgreen;
+        1px 1px 0 green,
+        1px -1px 0 green,
+        -1px 1px 0 green,
+        -1px -1px 0 green;
 }
 .product-info-main .product-reviews-summary {
     float: unset;
