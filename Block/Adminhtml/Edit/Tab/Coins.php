@@ -2,7 +2,7 @@
 namespace Kirill\Coins\Block\Adminhtml\Edit\Tab;
 use Magento\Customer\Controller\RegistryConstants;
 use Magento\Ui\Component\Layout\Tabs\TabInterface;
-
+use Magento\Backend\Block\Widget\Form\Generic;
 class Coins  extends \Magento\Framework\View\Element\Template implements TabInterface
 {
     /**
@@ -23,7 +23,11 @@ class Coins  extends \Magento\Framework\View\Element\Template implements TabInte
         array $data = []
     ) {
         $this->_coreRegistry = $registry;
-        parent::__construct($context, $data);
+        parent::__construct($context,$data);
+    }
+    public function initForm()
+    {
+        return parent::_prepareLayout();
     }
 
     /**

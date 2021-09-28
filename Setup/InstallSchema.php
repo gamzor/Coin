@@ -43,7 +43,7 @@ class InstallSchema implements InstallSchemaInterface
                 'Customer ID'
             )->addColumn(
                 'comment',
-                Table::TYPE_INTEGER,
+                Table::TYPE_TEXT,
                 255,
                 ['nullable' => false],
                 'Comment')
