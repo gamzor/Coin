@@ -16,13 +16,15 @@ class SaveCoins implements ObserverInterface
         \Magento\Sales\Model\Order $order,
         \Kirill\Coins\Model\CoinsFactory $dataFactory,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     )
     {
         $this->order = $order;
         $this->_dataFactory = $dataFactory;
         $this->resultPageFactory = $resultPageFactory;
         $this->_customerRepositoryInterface = $customerRepositoryInterface;
+        $this->scopeConfig = $scopeConfig;
     }
 
     public function execute(\Magento\Framework\Event\Observer $observer)
@@ -30,7 +32,8 @@ class SaveCoins implements ObserverInterface
         $order = $observer->getEvent()->getOrder()->getSubtotal();
         $customerId = $observer->getEvent()->getOrder()->getCustomerId();
         $orderId = $observer->getEvent()->getOrder()->getId();
-        $bonuscoins = (int)$order/10;
+        $percent = $this->getConfig('coins/general/percent');
+        $bonuscoins = (int)($order/$percent);
         if ($customerId) {
             $savedata = $this->_dataFactory->create();
             $savedata ->addData(['coins'=>$bonuscoins,'order_id'=>$orderId,'customer_id'=>$customerId,'comment'=>'Earn Coins from Order'])->save();
@@ -39,5 +42,12 @@ class SaveCoins implements ObserverInterface
             $this->_customerRepositoryInterface->save($customer);
 
         }
+    }
+    public function getConfig($config_path)
+    {
+        return $this->scopeConfig->getValue(
+            $config_path,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
     }
 }

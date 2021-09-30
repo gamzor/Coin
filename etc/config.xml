@@ -4,6 +4,7 @@
         <coins>
             <general>
                 <active>1</active>
+                <percent>10</percent>
             </general>
         </coins>
     </default>

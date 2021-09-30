@@ -21,9 +21,11 @@ class CoinAttribute extends Template
     public function __construct(
         Template\Context $context,
         Registry $registry,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         array $data)
     {
         $this->registry = $registry;
+        $this->scopeConfig = $scopeConfig;
 
         parent::__construct($context, $data);
     }
@@ -42,5 +44,12 @@ class CoinAttribute extends Template
         }
 
         return $this->product;
+    }
+    public function getConfig($config_path)
+    {
+        return $this->scopeConfig->getValue(
+            $config_path,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
     }
 }
