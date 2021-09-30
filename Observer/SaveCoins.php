@@ -3,8 +3,7 @@
 namespace Kirill\Coins\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
-use Kirill\Coins\Model\ResourceModel\Coins;
-class ProOrder implements ObserverInterface
+class SaveCoins implements ObserverInterface
 {
     /**
      * Order Model
@@ -12,19 +11,15 @@ class ProOrder implements ObserverInterface
      * @var \Magento\Sales\Model\Order $order
      */
     protected $order;
-    protected $coins;
-    protected $model;
+
     public function __construct(
         \Magento\Sales\Model\Order $order,
-        Coins $coins,
-        Coins $model,
         \Kirill\Coins\Model\CoinsFactory $dataFactory,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface
     )
     {
         $this->order = $order;
-        $this->coins = $coins;
         $this->_dataFactory = $dataFactory;
         $this->resultPageFactory = $resultPageFactory;
         $this->_customerRepositoryInterface = $customerRepositoryInterface;

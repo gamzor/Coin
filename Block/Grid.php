@@ -72,31 +72,4 @@ class Grid extends Template implements ArgumentInterface
         //@todo create logic for getting all records from database
         return $this->getData('coins');
     }
-
-
-    /**
-     * @return string
-     */
-    public function getDeleteAction()
-    {
-        return $this->getUrl('book/index/delete', ['_secure' => true]);
-    }
-
-    /**
-     * @param int $id
-     * @return string
-     */
-    public function getEditAction($id)
-    {
-        return $this->getUrl('book/index/edit', ['id' => $id, '_secure' => true]);
-    }
-
-    /**
-     * @return string
-     */
-    public function getAddAction()
-    {
-        return $this->getUrl('book/index/New', ['_secure' => true]);
-    }
-
 }
