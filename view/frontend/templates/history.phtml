@@ -52,7 +52,7 @@ $collection = $block->getCollection();
                     <?= $item->getComment(); ?>
                 </td>
                 <td data-th="<?= $block->escapeHtml(__('Coins')) ?>" class="col id">
-                    <?php if ($item->getCoins()<0){ echo '<span class="price" style="color:red">-' . $item->getCoins() . '</span>'; }
+                    <?php if ($item->getCoins()<0){ echo '<span class="price" style="color:red">' . $item->getCoins() . '</span>'; }
                     else { echo '<span class="price" style="color:green">+' . $item->getCoins() . '</span>';} ?>
                 </td>
                 <td data-th="<?= $block->escapeHtml(__('Date')) ?>" class="col coins">

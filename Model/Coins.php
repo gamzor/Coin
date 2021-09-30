@@ -27,6 +27,6 @@ class Coins extends \Magento\Framework\Model\AbstractModel implements \Magento\F
     }
     public function getNewInstance()
     {
-        return $this->booksFactory->create();
+        return $this->coinsFactory->create();
     }
 }

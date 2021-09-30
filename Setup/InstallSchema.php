@@ -33,7 +33,7 @@ class InstallSchema implements InstallSchemaInterface
                 'order_id',
                 Table::TYPE_INTEGER,
                 null,
-                ['nullable' => false],
+                ['nullable' => true],
                 'ORDER ID'
             )->addColumn(
                 'customer_id',
@@ -45,7 +45,7 @@ class InstallSchema implements InstallSchemaInterface
                 'comment',
                 Table::TYPE_TEXT,
                 255,
-                ['nullable' => false],
+                ['nullable' => true],
                 'Comment')
             ->addColumn(
                 'coins',

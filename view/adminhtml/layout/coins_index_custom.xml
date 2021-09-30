@@ -2,6 +2,11 @@
 <layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
     <container name="root" label="Root">
+        <block class="Kirill\Coins\Block\Adminhtml\Edit\Tab\View\Form" name="custom_form">
+        <arguments>
+            <argument name="target_form" xsi:type="string">customer_form</argument>
+        </arguments>
+        </block>
         <block class="Kirill\Coins\Block\Adminhtml\Edit\Tab\View\Grid" name="custom_tab"/>
     </container>
 </layout>

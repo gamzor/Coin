@@ -32,8 +32,8 @@ class Balance extends AbstractRenderer
 
     public function render(DataObject $row)
     {
-        if ($row->getIsDeduct()) {
-            $difference = '<span class="price" style="color:red">-' . $row->getCoins() . '</span>';
+        if ($row->getCoins()<0) {
+            $difference = '<span class="price" style="color:red">' . $row->getCoins() . '</span>';
         } else {
             $difference = '<span class="price" style="color:green">+' . $row->getCoins() . '</span>';
         }

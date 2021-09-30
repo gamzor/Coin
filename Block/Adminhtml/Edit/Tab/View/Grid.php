@@ -6,7 +6,6 @@ use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Helper\Data;
 use Magento\Framework\Registry;
 use Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory;
-use \Magento\Framework\Data\FormFactory;
 
 class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 {
@@ -19,12 +18,10 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         Data              $backendHelper,
         CollectionFactory $collectionFactory,
         Registry          $coreRegistry,
-        FormFactory       $formFactory,
         array             $data = []
     )
     {
         $this->_coreRegistry = $coreRegistry;
-        $this->_formFactory = $formFactory;
         $this->_collectionFactory = $collectionFactory;
         parent::__construct($context, $backendHelper, $data);
     }
@@ -38,6 +35,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         $this->setSortable(false);
         $this->setPagerVisibility(false);
         $this->setFilterVisibility(false);
+        $this->setEmptyText('No Coins Change');
     }
 
     protected function _prepareCollection()
