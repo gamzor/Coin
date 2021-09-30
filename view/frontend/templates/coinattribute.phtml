@@ -3,14 +3,15 @@
  * @var \Kirill\Coins\Block\CoinAttribute $block
  */
 ?>
-<?php $product = $block->getProduct();?>
-<?php $data = explode(',',$block->getProduct()->getCoins()); ?>
-<?php $show = $product->getData('isswitch'); ?>
-<?php if ($show == 1): ?>
+
+<?php $data = explode(',',$block->getProduct()->getData('price')); ?>
+<?php $status = $block->getConfig('coins/general/active') ?>
+<?php $percent = $block->getConfig('coins/general/percent') ?>
+<?php if($status == 1) :?>
     <ul class="product-icons">
         <h4>You Can Earn
             <?php foreach ($data as $value): ?>
-                <?= (int)$value; ?>
+                <?= (int)($value/$percent); ?>
             <?php endforeach; ?> Coins For Buying Product</h4>
     </ul>
 <?php endif;?>
