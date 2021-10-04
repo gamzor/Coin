@@ -62,7 +62,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
             [
                 'header' => __('Coins'),
                 'index' => 'coins',
-                'renderer' => 'Kirill\Coins\Block\Adminhtml\Edit\Tab\Renderer\Balance'
+                'renderer' => 'Kirill\Coins\Block\Adminhtml\Edit\Tab\Renderer\SignBalance'
             ]
         );
         $this->addColumn(
@@ -86,10 +86,10 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     {
         return $this->getCollection()->getSize() >= 0;
     }
-
-    public function getRowUrl($row)
+    public function getTotals()
     {
-        return $this->getUrl('catalog/product/edit', ['id' => $row->getProductId()]);
-    }
+        $collection = $this->_collectionFactory->create();
+        $collection->load('id');
 
+    }
 }

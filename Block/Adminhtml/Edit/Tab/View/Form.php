@@ -27,25 +27,27 @@ class Form extends Generic
      * @var \Magento\Customer\Model\CustomerFactory
      */
     protected $_customerFactory;
+
     /**
      * @param \Magento\Backend\Block\Template\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Magento\Framework\Data\FormFactory $formFactory
-     * @param \Magento\Customer\Model\CustomerFactory $customerFactory,
+     * @param \Magento\Customer\Model\CustomerFactory $customerFactory ,
      * @param \Kirill\Coins\Model\CoinsFactory $coinsFactory
      * @param \Magento\Store\Model\System\Store $systemStore
      * @param array $data
      */
     public function __construct(
-        \Magento\Backend\Block\Template\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\Data\FormFactory $formFactory,
-        \Kirill\Coins\Model\CoinsFactory $coinsFactory,
-        \Magento\Customer\Model\CustomerFactory $customerFactory,
-        \Magento\Store\Model\System\Store $systemStore,
-        \Kirill\Coins\Block\Coins\History $collectionFactory,
-        array $data = []
-    ) {
+        \Magento\Backend\Block\Template\Context                   $context,
+        \Magento\Framework\Registry                               $registry,
+        \Magento\Framework\Data\FormFactory                       $formFactory,
+        \Kirill\Coins\Model\CoinsFactory                          $coinsFactory,
+        \Magento\Customer\Model\CustomerFactory                   $customerFactory,
+        \Magento\Store\Model\System\Store                         $systemStore,
+        \Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory $collectionFactory,
+        array                                                     $data = []
+    )
+    {
         $this->_coinsFactory = $coinsFactory;
         $this->_systemStore = $systemStore;
         $this->_customerFactory = $customerFactory;
@@ -59,6 +61,16 @@ class Form extends Generic
      * @return Form
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
+    public function getTotal()
+    {
+        $total = 0;
+        $collection = $this->collectionFactory->create();
+        foreach ($collection as $item) {
+            $sum = $item->getCoins();
+            $total += $sum;
+        }
+        return $total;
+    }
     protected function _prepareForm(): Form
     {
         /** @var \Magento\Framework\Data\Form $form */
@@ -82,7 +94,7 @@ class Form extends Generic
                 'title' => __('Update Balance'),
                 'comment' => __('An amount on which to change the balance'),
                 'data-form-part' => $this->getData('target_form'),
-                'value' => $customer->getData('Сoins')
+                'value' => $this->getTotal()
             ]
         );
         $fieldset->addField(

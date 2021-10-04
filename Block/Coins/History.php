@@ -7,6 +7,7 @@ use Magento\Framework\View\Element\Template\Context;
 use Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use \Magento\Customer\Model\Session;
+
 /**
  * Class Grid.
  */
@@ -18,6 +19,7 @@ class History extends Template implements ArgumentInterface
     private $collectionFactory;
 
     protected Session $customerSession;
+
     /**
      * Grid constructor.
      * @param Template\Context $context
@@ -26,10 +28,10 @@ class History extends Template implements ArgumentInterface
      * @param array $data
      */
     public function __construct(
-        Context           $context,
+        Context                         $context,
         \Magento\Customer\Model\Session $customerSession,
-        CollectionFactory $collectionFactory,
-        array             $data = []
+        CollectionFactory               $collectionFactory,
+        array                           $data = []
     )
     {
         $this->collectionFactory = $collectionFactory;

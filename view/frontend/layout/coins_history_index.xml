@@ -1,9 +1,12 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <update handle="customer_account"/>
+    <head>
+        <css src="Kirill_Coins::css/table.css" />
+    </head>
     <body>
         <referenceBlock name="content">
-            <block class="Kirill\Coins\Block\Grid" name="encomage.coin.index" template="Kirill_Coins::history.phtml"/>
+            <block class="Kirill\Coins\Block\Grid" name="encomage.coin" template="Kirill_Coins::HistoryCoins.phtml"/>
         </referenceBlock>
     </body>
 </page>

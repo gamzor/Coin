@@ -1,5 +1,5 @@
 <?php
-namespace Kirill\Coins\Controller\history;
+namespace Kirill\Coins\Controller\History;
 
 use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterface;
 use Magento\Framework\App\Action\Context;
