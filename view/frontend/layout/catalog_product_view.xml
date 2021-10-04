@@ -5,7 +5,7 @@
     </head>
     <body>
         <referenceBlock name="product.info.main">
-            <block class="Kirill\Coins\Block\CoinAttribute" name="Kirill.coins" template="Kirill_Coins::coinattribute.phtml"  />
+            <block class="Kirill\Coins\Block\CoinAttribute" name="Kirill.coins" template="Kirill_Coins::CoinAttributeShowOnProduct.phtml"  />
         </referenceBlock>
         <move element="Kirill.coins" destination="product.info.main" before="product.info.price" />
     </body>

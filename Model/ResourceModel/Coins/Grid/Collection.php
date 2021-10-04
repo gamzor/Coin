@@ -3,6 +3,7 @@
 namespace Kirill\Coins\Model\ResourceModel\Coins\Grid;
 
 use Kirill\Coins\Model\ResourceModel\Coins\Collection as GridCollection;
+use Magento\Framework\Api\Search\AggregationInterface;
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\Document;
 use Magento\Framework\Api\SearchCriteriaInterface;

@@ -1,5 +1,5 @@
 <?php
-namespace Kirill\Coins\Controller\history;
+namespace Kirill\Coins\Controller\History;
 
 use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterface;
 use Magento\Framework\App\Action\Context;
@@ -34,11 +34,6 @@ class Index extends \Magento\Customer\Controller\AbstractAccount implements Http
      */
     public function execute()
     {
-        if ($this->moduleManager->isOutputEnabled('Vendor_Module')) {
-            //the module output is enabled
-        } else {
-            //the module output is disabled
-        }
         return $this->resultPageFactory->create();
     }
 }

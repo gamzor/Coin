@@ -9,7 +9,7 @@ use Magento\Framework\DataObject;
 use Magento\Store\Model\StoreManagerInterface;
 use Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory;
 
-class Balance extends AbstractRenderer
+class SignBalance extends AbstractRenderer
 {
     private $_storeManager;
     private $imageHelper;
