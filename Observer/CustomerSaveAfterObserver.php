@@ -3,49 +3,35 @@
 namespace Kirill\Coins\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
-
+use Kirill\Coins\Model\CoinsRepository;
+use Magento\Framework\Event\Observer;
 class CustomerSaveAfterObserver implements ObserverInterface
 {
 
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var CoinsRepository
      */
-    protected $_storeManager;
-
-    /**
-     * @var \Kirill\Coins\Model\CoinsFactory
-     */
-    protected $_balanceFactory;
+    protected $coinsRepository;
 
     /**
      * Constructor
      *
-     * @param \Kirill\Coins\Model\CoinsFactory $balanceFactory
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Kirill\Coins\Model\CoinsRepository $coinsRepository
      */
     public function __construct(
-        \Kirill\Coins\Model\CoinsFactory $balanceFactory,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        \Kirill\Coins\Model\CoinsRepository $coinsRepository
     ) {
-        $this->_balanceFactory = $balanceFactory;
-        $this->_storeManager = $storeManager;
+        $this->coinsRepository = $coinsRepository;
     }
 
-    /**
-     * Customer balance update after save
-     *
-     * @param \Magento\Framework\Event\Observer $observer
-     * @return void
-     */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    public function execute(Observer $observer)
     {
 
         /* @var $request \Magento\Framework\App\RequestInterface */
       $request = $observer->getRequest();
       $var = $request->getPost('coins');
-        /* @var $customer \Magento\Customer\Api\Data\CustomerInterface */
-            $balance = $this->_balanceFactory->create();
+        $balance = $this->coinsRepository->getNewInstance();
             $balance->addData(['coins'=>$var['amount_coins'],'comment'=>$var['comment']]);
-            $balance->save();
+            $this->coinsRepository->save($balance);
     }
 }

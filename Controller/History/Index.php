@@ -4,10 +4,9 @@ namespace Kirill\Coins\Controller\History;
 use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterface;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
-
-class Index extends \Magento\Customer\Controller\AbstractAccount implements HttpGetActionInterface
+use \Magento\Customer\Controller\AbstractAccount;
+class Index extends AbstractAccount implements HttpGetActionInterface
 {
-    protected $moduleManager;
     /**
      * @var PageFactory
      */
@@ -19,11 +18,9 @@ class Index extends \Magento\Customer\Controller\AbstractAccount implements Http
      */
     public function __construct(
         Context $context,
-        PageFactory $resultPageFactory,
-        \Magento\Framework\Module\Manager $moduleManager
+        PageFactory $resultPageFactory
     ) {
         $this->resultPageFactory = $resultPageFactory;
-        $this->moduleManager = $moduleManager;
         parent::__construct($context);
     }
 
@@ -34,11 +31,6 @@ class Index extends \Magento\Customer\Controller\AbstractAccount implements Http
      */
     public function execute()
     {
-        if ($this->moduleManager->isOutputEnabled('Vendor_Module')) {
-            //the module output is enabled
-        } else {
-            //the module output is disabled
-        }
         return $this->resultPageFactory->create();
     }
 }

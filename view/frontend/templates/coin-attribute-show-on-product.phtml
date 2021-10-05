@@ -3,10 +3,9 @@
  * @var \Kirill\Coins\Block\CoinAttribute $block
  */
 ?>
-
 <?php $data = explode(',',$block->getProduct()->getData('price')); ?>
 <?php $status = $block->getConfig('coins/general/active') ?>
-<?php $percent = $block->getConfig('coins/general/percent') ?>
+<?php $percent = 100/($block->getConfig('coins/general/percent')) ?>
 <?php if($status == 1) :?>
     <ul class="product-icons">
         <h4>You Can Earn

@@ -7,7 +7,11 @@
     <body>
         <referenceBlock name="customer_account_navigation">
             <block class="Magento\Customer\Block\Account\SortLinkInterface" ifconfig="coins/general/active" name="customer-account-navigation-coin-link"
+<<<<<<< HEAD
+                   template="Kirill_Coins::сoins.phtml"/>
+=======
                    template="Kirill_Coins::Coins.phtml"/>
+>>>>>>> master
             <arguments>
                 <argument name="path" xsi:type="string">coins/history</argument>
                 <argument name="label" xsi:type="string" translate="true">coins</argument>
