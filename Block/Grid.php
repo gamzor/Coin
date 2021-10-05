@@ -37,8 +37,6 @@ class Grid extends Template implements ArgumentInterface
     }
     public function getCustomer()
     {
-        echo $this->_session->getCustomer()->getId(); //Print current customer ID
-
         $customerData = $this->_session->getCustomer();
         print_r($customerData->getData()); //Print current Customer Data
     }

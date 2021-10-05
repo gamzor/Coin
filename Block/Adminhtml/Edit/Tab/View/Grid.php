@@ -86,10 +86,4 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     {
         return $this->getCollection()->getSize() >= 0;
     }
-    public function getTotals()
-    {
-        $collection = $this->_collectionFactory->create();
-        $collection->load('id');
-
-    }
 }

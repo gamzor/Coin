@@ -1,0 +1,66 @@
+.product-icons {
+    color: white;
+    padding: unset;
+    text-shadow: 1px 1px 0 orange, 1px -1px 0 orange, -1px 1px 0 orange, -1px -1px 0 orange;
+    transition: all 1s;
+    &:hover {
+        text-shadow: 1px 1px 0 green, 1px -1px 0 green, -1px 1px 0 green, -1px -1px 0 green;
+    }
+}
+.product-info-main {
+    .product-reviews-summary {
+        float: unset;
+    }
+}
+
+.table-wrapper .coins-history {
+    border-radius: 10px;
+    border-spacing: 0;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    font-size: 14px;
+    text-align: center;
+}
+th {
+    background: #BCEBDD;
+    border-color: white;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #8a0404;
+    padding: 10px 20px;
+    text-shadow: 0 1px 1px #2D2020;
+    &:first-child {
+        border-top-left-radius: 10px;
+        text-align: left;
+    }
+    &:last-child {
+        border-right: none;
+        border-top-right-radius: 10px;
+    }
+}
+td {
+    background: #F8E391;
+    border-color: white;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    padding: 10px 20px;
+    &:first-child {
+        text-align: left;
+    }
+}
+tr {
+    &:last-child {
+        td {
+            &:first-child {
+                border-radius: 0 0 0 10px;
+            }
+            &:last-child {
+                border-radius: 0 0 10px 0;
+            }
+        }
+    }
+    td {
+        &:last-child {
+            border-right: none;
+        }
+    }
+}
