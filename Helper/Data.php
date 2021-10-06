@@ -33,9 +33,9 @@ class Data extends AbstractHelper
     }
 
     /**
-     * Check if automatically refund is enabled
+     * Get percent from configuration
      *
-     * @return bool
+     * @return int
      */
     public function getPercent()
     {

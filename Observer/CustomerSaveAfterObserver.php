@@ -19,19 +19,23 @@ class CustomerSaveAfterObserver implements ObserverInterface
      * @param \Kirill\Coins\Model\CoinsRepository $coinsRepository
      */
     public function __construct(
-        \Kirill\Coins\Model\CoinsRepository $coinsRepository
+        CoinsRepository $coinsRepository
     ) {
         $this->coinsRepository = $coinsRepository;
     }
 
+    /** Save coins and change coins from form
+     * @param Observer $observer
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     */
     public function execute(Observer $observer)
     {
 
         /* @var $request \Magento\Framework\App\RequestInterface */
       $request = $observer->getRequest();
-      $var = $request->getPost('coins');
+      $coins = $request->getPost('coins');
         $balance = $this->coinsRepository->getNewInstance();
-            $balance->addData(['coins'=>$var['amount_coins'],'comment'=>$var['comment']]);
+            $balance->addData(['coins'=>$coins['amount_coins'],'comment'=>$coins['comment']]);
             $this->coinsRepository->save($balance);
     }
 }

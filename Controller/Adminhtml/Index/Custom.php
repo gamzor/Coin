@@ -2,7 +2,8 @@
 
 namespace Kirill\Coins\Controller\Adminhtml\Index;
 
-class Custom extends \Magento\Customer\Controller\Adminhtml\Index
+use Magento\Customer\Controller\Adminhtml\Index;
+class Custom extends Index
 {
     /**
      * Customer compare grid

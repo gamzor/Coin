@@ -1,6 +1,7 @@
 <?php
 namespace Kirill\Coins\Block;
 
+use Kirill\Coins\Helper\Data;
 use Magento\Catalog\Model\Product;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
@@ -21,12 +22,11 @@ class CoinAttribute extends Template
     public function __construct(
         Template\Context $context,
         Registry $registry,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        Data $helper,
         array $data)
     {
         $this->registry = $registry;
-        $this->scopeConfig = $scopeConfig;
-
+        $this->helper = $helper;
         parent::__construct($context, $data);
     }
 
@@ -35,7 +35,7 @@ class CoinAttribute extends Template
      */
     public function getProduct()
     {
-        if (is_null($this->product)) {
+        if ($this->product === null) {
             $this->product = $this->registry->registry('product');
 
             if (!$this->product->getId()) {
@@ -45,11 +45,12 @@ class CoinAttribute extends Template
 
         return $this->product;
     }
-    public function getConfig($config_path)
+    public function isEnabled()
     {
-        return $this->scopeConfig->getValue(
-            $config_path,
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-        );
+        return $this->helper->isEnabled();
+    }
+    public function getPercent()
+    {
+        return $this->helper->getPercent();
     }
 }
