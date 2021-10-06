@@ -96,4 +96,21 @@ class Grid extends Extended
         );
         return parent::_prepareColumns();
     }
+<<<<<<< HEAD
+=======
+
+    public function getHeadersVisibility()
+    {
+        return $this->getCollection()->getSize() >= 0;
+    }
+<<<<<<< HEAD
+=======
+    public function getTotals()
+    {
+        $collection = $this->_collectionFactory->create();
+        $collection->load('id');
+
+    }
+>>>>>>> master
+>>>>>>> master
 }
