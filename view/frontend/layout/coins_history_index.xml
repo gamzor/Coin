@@ -9,7 +9,11 @@
 <<<<<<< HEAD
             <block class="Kirill\Coins\Block\Grid" name="encomage.coin" template="Kirill_Coins::history-coins.phtml"/>
 =======
+<<<<<<< HEAD
+            <block class="Kirill\Coins\Block\Grid" name="encomage.coin" template="Kirill_Coins::history-coins.phtml"/>
+=======
             <block class="Kirill\Coins\Block\Grid" name="encomage.coin" template="Kirill_Coins::HistoryCoins.phtml"/>
+>>>>>>> master
 >>>>>>> master
         </referenceBlock>
     </body>

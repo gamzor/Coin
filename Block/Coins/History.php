@@ -18,7 +18,7 @@ class History extends Template implements ArgumentInterface
      */
     private $collectionFactory;
 
-    protected Session $customerSession;
+    protected $customerSession;
 
     /**
      * Grid constructor.
@@ -29,7 +29,7 @@ class History extends Template implements ArgumentInterface
      */
     public function __construct(
         Context                         $context,
-        \Magento\Customer\Model\Session $customerSession,
+        Session $customerSession,
         CollectionFactory               $collectionFactory,
         array                           $data = []
     )
@@ -50,8 +50,25 @@ class History extends Template implements ArgumentInterface
         return $this->collectionFactory->create();
     }
 
+    /**
+     * @return mixed
+     */
     public function getCoinsValue()
     {
-        return $this->customerSession->getCustomer()->getData('coins')->getValue(); //Print current customer ID
+        return $this->customerSession->getCustomer()->getCoins();
+    }
+
+    /** Sum of coins
+     * @return int
+     */
+    public function getTotal()
+    {
+        $total = 0;
+        $collection = $this->collectionFactory->create();
+        foreach ($collection as $item) {
+            $sum = $item->getCoins();
+            $total += $sum;
+        }
+        return $total;
     }
 }

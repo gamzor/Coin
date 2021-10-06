@@ -35,16 +35,30 @@ class SaveCoins implements ObserverInterface
         $this->helper = $helper;
     }
 
+<<<<<<< HEAD
+    /** Save coins after order
+     * @param Observer $observer
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     */
+=======
+>>>>>>> master
     public function execute(Observer $observer)
     {
         $order = $observer->getEvent()->getOrder()->getSubtotal();
         $customerId = $observer->getEvent()->getOrder()->getCustomerId();
         $orderId = $observer->getEvent()->getOrder()->getId();
         $percent = 100 / ($this->helper->getPercent());
+<<<<<<< HEAD
+        $coins = (int)($order / $percent);
+        if ($customerId) {
+            $savedata = $this->coinsRepository->getNewInstance();
+            $savedata->addData(['coins' => $coins, 'order_id' => $orderId, 'customer_id' => $customerId, 'comment' => 'Earn Coins from Order']);
+=======
         $bonuscoins = (int)($order / $percent);
         if ($customerId) {
             $savedata = $this->coinsRepository->getNewInstance();
             $savedata->addData(['coins' => $bonuscoins, 'order_id' => $orderId, 'customer_id' => $customerId, 'comment' => 'Earn Coins from Order']);
+>>>>>>> master
             $this->coinsRepository->save($savedata);
         }
     }

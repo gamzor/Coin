@@ -55,11 +55,9 @@ class Form extends Generic
         parent::__construct($context, $registry, $formFactory, $data);
     }
 
-    /**
-     * Prepare form fields
+    /** Calculate all coins
      *
-     * @return Form
-     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * @return int
      */
     public function getTotal()
     {
@@ -71,6 +69,12 @@ class Form extends Generic
         }
         return $total;
     }
+    /**
+     * Prepare form fields
+     *
+     * @return Form
+     * @SuppressWarnings(PHPMD.NPathComplexity)
+     */
     protected function _prepareForm(): Form
     {
         /** @var \Magento\Framework\Data\Form $form */

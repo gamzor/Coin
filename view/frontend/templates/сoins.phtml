@@ -1,9 +1,20 @@
 <?php
+<<<<<<< HEAD
+/** @var $block \Magento\Framework\View\Element\Html\Links
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+<nav class="account-nav">
+    <li class="nav item">
+        <a href="<?= $escaper->escapeUrl($block->getUrl('coins/history')) ?>">
+            <span><?= $escaper->escapeHtml(__('Coins')) ?></span></a>
+=======
 /** @var $block \Magento\Framework\View\Element\Html\Links */
 ?>
 <nav class="account-nav">
     <li class="nav item">
         <a href="<?= $block->escapeUrl($block->getUrl('coins/history')) ?>">
             <span><?= $block->escapeHtml(__('Coins')) ?></span></a>
+>>>>>>> master
     </li>
 </nav>

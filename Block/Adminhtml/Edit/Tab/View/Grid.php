@@ -6,11 +6,16 @@ use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Helper\Data;
 use Magento\Framework\Registry;
 use Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory;
-
-class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
+use Magento\Backend\Block\Widget\Grid\Extended;
+class Grid extends Extended
 {
+    /**
+     * @var Registry|null
+     */
     protected $_coreRegistry = null;
-
+    /**
+     * @var CollectionFactory
+     */
     protected $collectionFactory;
 
     public function __construct(
@@ -38,12 +43,22 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         $this->setEmptyText('No Coins Change');
     }
 
+    /** Collection on Grid
+     *
+     * @return Grid
+     */
     protected function _prepareCollection()
     {
         $collection = $this->_collectionFactory->create();
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
+
+    /** Prepare grid columns
+     *
+     * @return Grid
+     * @throws \Exception
+     */
     protected function _prepareColumns()
     {
         $this->addColumn(
@@ -81,6 +96,8 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         );
         return parent::_prepareColumns();
     }
+<<<<<<< HEAD
+=======
 
     public function getHeadersVisibility()
     {
@@ -94,5 +111,6 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         $collection->load('id');
 
     }
+>>>>>>> master
 >>>>>>> master
 }

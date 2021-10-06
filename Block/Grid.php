@@ -6,6 +6,7 @@ use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
+use Magento\Customer\Model\Session;
 
 /**
  * Class Grid.
@@ -16,6 +17,9 @@ class Grid extends Template implements ArgumentInterface
      * @var \Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory
      */
     private $collectionFactory;
+    /**
+     * @var \Magento\Customer\Model\Session
+     */
     protected $_session;
     /**
      * Grid constructor.
@@ -26,7 +30,7 @@ class Grid extends Template implements ArgumentInterface
     public function __construct(
         Context           $context,
         CollectionFactory $collectionFactory,
-        \Magento\Customer\Model\Session $session,
+        Session $session,
         array             $data = []
 
     )
@@ -35,13 +39,17 @@ class Grid extends Template implements ArgumentInterface
         parent::__construct($context, $data);
         $this->_session = $session;
     }
+<<<<<<< HEAD
+
+=======
     public function getCustomer()
     {
         $customerData = $this->_session->getCustomer();
         print_r($customerData->getData()); //Print current Customer Data
     }
+>>>>>>> master
     /**
-     * Get collection of books
+     * Get collection of coins
      *
      * @return \Kirill\Coins\Model\ResourceModel\Coins\Collection
      */
@@ -51,7 +59,7 @@ class Grid extends Template implements ArgumentInterface
         return $this->collectionFactory->create();
     }
     /**
-     * Get collection of books
+     * Get collection of coins
      *
      * @return \Kirill\Coins\Model\ResourceModel\Coins\Collection
      */
@@ -61,7 +69,7 @@ class Grid extends Template implements ArgumentInterface
         return $this->getData('id');
     }
     /**
-     * Get collection of books
+     * Get collection of coins
      *
      * @return \Kirill\Coins\Model\ResourceModel\Coins\Collection
      */

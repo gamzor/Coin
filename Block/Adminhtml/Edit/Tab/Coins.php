@@ -2,8 +2,10 @@
 namespace Kirill\Coins\Block\Adminhtml\Edit\Tab;
 use Magento\Customer\Controller\RegistryConstants;
 use Magento\Ui\Component\Layout\Tabs\TabInterface;
-
-class Coins  extends \Magento\Framework\View\Element\Template implements TabInterface
+use Magento\Backend\Block\Template\Context;
+use Magento\Framework\Registry;
+use Magento\Framework\View\Element\Template;
+class Coins  extends Template implements TabInterface
 {
     /**
      * Core registry
@@ -18,8 +20,8 @@ class Coins  extends \Magento\Framework\View\Element\Template implements TabInte
      */
 
     public function __construct(
-        \Magento\Backend\Block\Template\Context $context,
-        \Magento\Framework\Registry $registry,
+        Context $context,
+        Registry $registry,
         array $data = []
     ) {
         $this->_coreRegistry = $registry;
@@ -27,7 +29,7 @@ class Coins  extends \Magento\Framework\View\Element\Template implements TabInte
     }
 
     /**
-     * @return string|null
+     * @return int|null
      */
     public function getCustomerId()
     {
@@ -52,10 +54,7 @@ class Coins  extends \Magento\Framework\View\Element\Template implements TabInte
      */
     public function canShowTab()
     {
-        if ($this->getCustomerId()) {
-            return true;
-        }
-        return false;
+        return (bool)$this->getCustomerId();
     }
 
     /**
@@ -63,10 +62,7 @@ class Coins  extends \Magento\Framework\View\Element\Template implements TabInte
      */
     public function isHidden()
     {
-        if ($this->getCustomerId()) {
-            return false;
-        }
-        return true;
+        return (bool)$this->getCustomerId();
     }
     /**
      * Tab class getter
