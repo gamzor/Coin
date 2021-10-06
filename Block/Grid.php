@@ -39,15 +39,13 @@ class Grid extends Template implements ArgumentInterface
         parent::__construct($context, $data);
         $this->_session = $session;
     }
-<<<<<<< HEAD
 
-=======
     public function getCustomer()
     {
         $customerData = $this->_session->getCustomer();
         print_r($customerData->getData()); //Print current Customer Data
     }
->>>>>>> master
+
     /**
      * Get collection of coins
      *
