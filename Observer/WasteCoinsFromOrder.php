@@ -3,11 +3,12 @@
 namespace Kirill\Coins\Observer;
 
 use Kirill\Coins\Helper\Data;
+use Magento\Customer\Model\ResourceModel\CustomerRepository;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Sales\Model\Order;
 use Kirill\Coins\Model\CoinsRepository;
 use \Magento\Framework\Event\Observer;
-class SaveCoins implements ObserverInterface
+class WasteCoinsFromOrder implements ObserverInterface
 {
     /**
      * Order Model
@@ -27,38 +28,29 @@ class SaveCoins implements ObserverInterface
     public function __construct(
         Order                        $order,
         CoinsRepository               $coinsRepository,
+        CustomerRepository $customerRepository,
         Data                         $helper
     )
     {
         $this->order = $order;
         $this->coinsRepository = $coinsRepository;
+        $this->customerRepository = $customerRepository;
         $this->helper = $helper;
     }
 
-<<<<<<< HEAD
-    /** Save coins after order
+    /** Waste coins after order
      * @param Observer $observer
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
-=======
->>>>>>> master
     public function execute(Observer $observer)
     {
-        $order = $observer->getEvent()->getOrder()->getSubtotal();
-        $customerId = $observer->getEvent()->getOrder()->getCustomerId();
-        $orderId = $observer->getEvent()->getOrder()->getId();
-        $percent = 100 / ($this->helper->getPercent());
-<<<<<<< HEAD
-        $coins = (int)($order / $percent);
-        if ($customerId) {
+        $quoteMethod = $observer->getOrder()->getPayment()->getMethod();
+        $Subtotal = $observer->getOrder()->getSubtotal();
+        $customerId = $observer->getOrder()->getCustomerId();
+        $orderId = $observer->getOrder()->getId();
+        if ($customerId && $quoteMethod == 'coins_payment_option') {
             $savedata = $this->coinsRepository->getNewInstance();
-            $savedata->addData(['coins' => $coins, 'order_id' => $orderId, 'customer_id' => $customerId, 'comment' => 'Earn Coins from Order']);
-=======
-        $bonuscoins = (int)($order / $percent);
-        if ($customerId) {
-            $savedata = $this->coinsRepository->getNewInstance();
-            $savedata->addData(['coins' => $bonuscoins, 'order_id' => $orderId, 'customer_id' => $customerId, 'comment' => 'Earn Coins from Order']);
->>>>>>> master
+            $savedata->addData(['coins' => -$Subtotal, 'order_id' => $orderId, 'customer_id' => $customerId, 'comment' => 'Waste Coins from Order']);
             $this->coinsRepository->save($savedata);
         }
     }

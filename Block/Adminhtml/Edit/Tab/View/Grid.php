@@ -36,7 +36,7 @@ class Grid extends Extended
     {
         parent::_construct();
         $this->setId('coins');
-        $this->setDefaultSort('created_at', 'desc');
+        $this->setDefaultSort('id', 'asc');
         $this->setSortable(false);
         $this->setPagerVisibility(false);
         $this->setFilterVisibility(false);
@@ -96,21 +96,4 @@ class Grid extends Extended
         );
         return parent::_prepareColumns();
     }
-<<<<<<< HEAD
-=======
-
-    public function getHeadersVisibility()
-    {
-        return $this->getCollection()->getSize() >= 0;
-    }
-<<<<<<< HEAD
-=======
-    public function getTotals()
-    {
-        $collection = $this->_collectionFactory->create();
-        $collection->load('id');
-
-    }
->>>>>>> master
->>>>>>> master
 }
