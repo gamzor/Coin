@@ -16,7 +16,6 @@ class Grid extends Template implements ArgumentInterface
      * @var \Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory
      */
     private $collectionFactory;
-    protected $_session;
     /**
      * Grid constructor.
      * @param Template\Context $context
@@ -26,22 +25,16 @@ class Grid extends Template implements ArgumentInterface
     public function __construct(
         Context           $context,
         CollectionFactory $collectionFactory,
-        \Magento\Customer\Model\Session $session,
         array             $data = []
 
     )
     {
         $this->collectionFactory = $collectionFactory;
         parent::__construct($context, $data);
-        $this->_session = $session;
     }
-    public function getCustomer()
-    {
-        $customerData = $this->_session->getCustomer();
-        print_r($customerData->getData()); //Print current Customer Data
-    }
+
     /**
-     * Get collection of books
+     * Get collection of coins
      *
      * @return \Kirill\Coins\Model\ResourceModel\Coins\Collection
      */
@@ -50,24 +43,29 @@ class Grid extends Template implements ArgumentInterface
         //@todo create logic for getting all records from database
         return $this->collectionFactory->create();
     }
-    /**
-     * Get collection of books
-     *
-     * @return \Kirill\Coins\Model\ResourceModel\Coins\Collection
+    /** Get Total coins for customer
+     * @return int
      */
-    public function getId()
+    public function getTotal(): int
     {
-        //@todo create logic for getting all records from database
-        return $this->getData('id');
+        $total = 0;
+        $collection = $this->collectionFactory->create();
+        foreach ($collection as $item) {
+            $sum = $item->getCoins();
+            $total += $sum;
+        }
+        return $total;
     }
-    /**
-     * Get collection of books
-     *
-     * @return \Kirill\Coins\Model\ResourceModel\Coins\Collection
+
+    /** Sign value attribute coins
+     * @param $item
+     * @return string
      */
-    public function getCoins()
+    public function getSignCoins($item)
     {
-        //@todo create logic for getting all records from database
-        return $this->getData('coins');
+        return  ($item->getCoins()<0)
+            ? '<span class="price" style="color:red">' . $item->getCoins() . '</span>'
+            : '<span class="price" style="color:green">+' . $item->getCoins() . '</span>';
     }
+
 }

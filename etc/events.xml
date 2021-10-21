@@ -3,4 +3,8 @@
     <event name="adminhtml_customer_save_after">
         <observer name="coins" instance="Kirill\Coins\Observer\CustomerSaveAfterObserver"/>
     </event>
+    <event name="checkout_submit_all_after">
+        <observer name="save_checkout_submit_all_after" instance="Kirill\Coins\Observer\SaveCoinsFromOrder" />
+        <observer name="waste_checkout_submit_all_after" instance="Kirill\Coins\Observer\WasteCoinsFromOrder" />
+    </event>
 </config>
