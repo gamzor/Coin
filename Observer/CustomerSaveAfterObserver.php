@@ -49,16 +49,16 @@ class CustomerSaveAfterObserver implements ObserverInterface
         /* @var $request \Magento\Framework\App\RequestInterface */
         $request = $observer->getRequest();
         $coins = $request->getPost('coins');
+        $customer = $observer->getCustomer();
         if (!($coins['amount_coins'] == "" && $coins['comment'] == "")) {
-            $oldcustomerCoins = $observer->getCustomer()->getCustomAttributes()['coins']->getValue();
+            $oldcustomerCoins = $this->coinsRepository->getOldcustomercoins($customer);
             $balance = $this->coinsRepository->getNewInstance();
             $balance->addData(['coins' => $coins['amount_coins'], 'comment' => $coins['comment']]);
-                if ($oldcustomerCoins >= 0 && $coins['amount_coins'] >= 0) {
-                    $newcustomerCoins = $observer->getCustomer()->setCustomAttribute('coins', $oldcustomerCoins + $coins['amount_coins']);
-                    $this->coinsRepository->save($balance);
-                    $this->customerRepository->save($newcustomerCoins);
-                }
-                $this->manager->addErrorMessage(__('Enter Correct value for coins'));
+            if ($oldcustomerCoins >= 0 && $coins['amount_coins'] >= 0) {
+                $this->coinsRepository->Savecoinsforcustomer($customer, $coins);
+                $this->coinsRepository->save($balance);
+            }
+            $this->manager->addErrorMessage(__('Enter Correct value for coins'));
         }
         return;
     }

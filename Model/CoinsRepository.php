@@ -110,4 +110,65 @@ class CoinsRepository implements CoinsRepositoryInterface
     {
         return $this->coinsFactory->create();
     }
+
+    /** Check method from configuration
+     * @param $observer
+     * @return mixed
+     */
+    public function getMethod($observer)
+    {
+        return $observer->getOrder()->getPayment()->getMethod();
+    }
+
+    /** Check subtotal order
+     * @param $observer
+     * @return mixed
+     */
+    public function getSubtotal($observer)
+    {
+        return $observer->getOrder()->getSubtotal();
+    }
+
+    /** Identify the current customer
+     * @param $observer
+     * @return mixed
+     */
+    public function getCustomer($observer)
+    {
+        return $observer->getQuote()->getCustomer();
+    }
+
+    /**
+     * @param $subtotal
+     * @param $orderId
+     * @param $customerId
+     * @return CoinsInterface|Coins
+     * @throws CouldNotSaveException
+     */
+    public function SaveCoins($subtotal,$orderId,$customerId)
+    {
+        $savedata = $this->getNewInstance();
+        $savedata->addData(['coins' => -$subtotal, 'order_id' => $orderId, 'customer_id' => $customerId, 'comment' => 'Earn Coins from Order']);
+        return $this->save($savedata);
+    }
+    /** Get Customer Coins
+     * @param $customer
+     * @return mixed
+     */
+    public function getOldcustomercoins($customer)
+    {
+        return $customer->getCustomAttributes()['coins']->getValue();
+    }
+
+    /**
+     * @param $customer
+     * @param int $coins
+     * @return mixed
+     */
+    public function Savecoinsforcustomer($customer, int $coins)
+    {
+        $oldcustomerCoins = $this->getOldcustomercoins($customer);
+        $savecustomerCoins = $customer->setCustomAttribute('coins',$oldcustomerCoins+$coins);
+        return $this->save($savecustomerCoins);
+    }
 }
