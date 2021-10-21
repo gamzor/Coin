@@ -1,0 +1,14 @@
+<?php
+/**
+ * @var \Kirill\Coins\Block\CoinAttribute $block
+ */
+?>
+<?php $price =$block->getPrice();
+        $status = $block->isEnabled();
+        $customerId = $block->getCustomerId();
+        $percent = 100 / ($block->getPercent()) ?>
+<?php if ($customerId && $status) : ?>
+    <ul class="product-icons">
+        <h4>You Can Earn <?= (int)($price / $percent); ?> Coins For Buying Product</h4>
+    </ul>
+<?php endif; ?>

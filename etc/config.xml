@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store: etc/config.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <coins>
             <general>
@@ -7,5 +7,15 @@
                 <percent>10</percent>
             </general>
         </coins>
+        <payment>
+            <coins_payment_option>
+                <title>Coins Payment Option</title>
+                <active>1</active>
+                <model>Kirill\Coins\Model\Payment</model>
+                <order_status>pending</order_status>
+                <cctypes>AE,VI,MC,DI</cctypes>
+                <can_use_checkout>1</can_use_checkout>
+            </coins_payment_option>
+        </payment>
     </default>
 </config>

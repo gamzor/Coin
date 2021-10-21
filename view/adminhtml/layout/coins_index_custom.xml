@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
-    <container name="root" label="Root">
+    <container name="content" label="Root">
         <block class="Kirill\Coins\Block\Adminhtml\Edit\Tab\View\Form" name="custom_form">
         <arguments>
             <argument name="target_form" xsi:type="string">customer_form</argument>

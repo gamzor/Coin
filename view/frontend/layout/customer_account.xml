@@ -6,13 +6,7 @@
     </head>
     <body>
         <referenceBlock name="customer_account_navigation">
-            <block class="Magento\Customer\Block\Account\SortLinkInterface" ifconfig="coins/general/active" name="customer-account-navigation-coin-link"
-                   template="Kirill_Coins::сoins.phtml"/>
-            <arguments>
-                <argument name="path" xsi:type="string">coins/history</argument>
-                <argument name="label" xsi:type="string" translate="true">coins</argument>
-                <argument name="sortOrder" xsi:type="number">240</argument>
-            </arguments>
+            <block ifconfig="coins/general/active" name="customer-account-navigation-coin-link" template="Kirill_Coins::сoins_tab.phtml"/>
         </referenceBlock>
     </body>
 </page>

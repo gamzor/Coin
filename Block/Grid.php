@@ -6,7 +6,6 @@ use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
-use Magento\Customer\Model\Session;
 
 /**
  * Class Grid.
@@ -18,10 +17,6 @@ class Grid extends Template implements ArgumentInterface
      */
     private $collectionFactory;
     /**
-     * @var \Magento\Customer\Model\Session
-     */
-    protected $_session;
-    /**
      * Grid constructor.
      * @param Template\Context $context
      * @param \Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory $collectionFactory
@@ -30,20 +25,12 @@ class Grid extends Template implements ArgumentInterface
     public function __construct(
         Context           $context,
         CollectionFactory $collectionFactory,
-        Session $session,
         array             $data = []
 
     )
     {
         $this->collectionFactory = $collectionFactory;
         parent::__construct($context, $data);
-        $this->_session = $session;
-    }
-
-    public function getCustomer()
-    {
-        $customerData = $this->_session->getCustomer();
-        print_r($customerData->getData()); //Print current Customer Data
     }
 
     /**
@@ -56,24 +43,29 @@ class Grid extends Template implements ArgumentInterface
         //@todo create logic for getting all records from database
         return $this->collectionFactory->create();
     }
-    /**
-     * Get collection of coins
-     *
-     * @return \Kirill\Coins\Model\ResourceModel\Coins\Collection
+    /** Get Total coins for customer
+     * @return int
      */
-    public function getId()
+    public function getTotal(): int
     {
-        //@todo create logic for getting all records from database
-        return $this->getData('id');
+        $total = 0;
+        $collection = $this->collectionFactory->create();
+        foreach ($collection as $item) {
+            $sum = $item->getCoins();
+            $total += $sum;
+        }
+        return $total;
     }
-    /**
-     * Get collection of coins
-     *
-     * @return \Kirill\Coins\Model\ResourceModel\Coins\Collection
+
+    /** Sign value attribute coins
+     * @param $item
+     * @return string
      */
-    public function getCoins()
+    public function getSignCoins($item)
     {
-        //@todo create logic for getting all records from database
-        return $this->getData('coins');
+        return  ($item->getCoins()<0)
+            ? '<span class="price" style="color:red">' . $item->getCoins() . '</span>'
+            : '<span class="price" style="color:green">+' . $item->getCoins() . '</span>';
     }
+
 }

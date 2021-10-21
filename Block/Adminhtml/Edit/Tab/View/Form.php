@@ -6,9 +6,7 @@
 
 namespace Kirill\Coins\Block\Adminhtml\Edit\Tab\View;
 
-use Kirill\Coins\Model\Coins;
 use Magento\Backend\Block\Widget\Form\Generic;
-use Magento\Customer\Model\Customer;
 use Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory;
 
 class Form extends Generic
@@ -55,26 +53,13 @@ class Form extends Generic
         parent::__construct($context, $registry, $formFactory, $data);
     }
 
-    /** Calculate all coins
-     *
-     * @return int
-     */
-    public function getTotal()
-    {
-        $total = 0;
-        $collection = $this->collectionFactory->create();
-        foreach ($collection as $item) {
-            $sum = $item->getCoins();
-            $total += $sum;
-        }
-        return $total;
-    }
     /**
      * Prepare form fields
      *
      * @return Form
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
+
     protected function _prepareForm(): Form
     {
         /** @var \Magento\Framework\Data\Form $form */
@@ -83,8 +68,6 @@ class Form extends Generic
         $form->setHtmlIdPrefix($prefix);
         $form->setFieldNameSuffix('coins');
 
-        /** @var Customer $customer */
-        $customer = $this->_customerFactory->create()->load($this->getRequest()->getParam('id'));
 
         /** @var $fieldset \Magento\Framework\Data\Form\Element\Fieldset */
         $fieldset = $form->addFieldset('coins_fieldset', ['legend' => __('Update Balance')]);
@@ -98,7 +81,6 @@ class Form extends Generic
                 'title' => __('Update Balance'),
                 'comment' => __('An amount on which to change the balance'),
                 'data-form-part' => $this->getData('target_form'),
-                'value' => $this->getTotal()
             ]
         );
         $fieldset->addField(
@@ -112,7 +94,32 @@ class Form extends Generic
                 'data-form-part' => $this->getData('target_form')
             ]
         );
+        $fieldset->addField(
+            'total',
+            'button',
+            [
+                'name' => 'total',
+                'label' => __('Total'),
+                'title' => __('Total'),
+                'data-form-part' => $this->getData('target_form'),
+                'value' => $this->getTotal()
+            ]
+        );
         $this->setForm($form);
         return $this;
+    }
+
+    /** Get total coins for customer
+     * @return int
+     */
+    public function getTotal()
+    {
+        $total = 0;
+        $collection = $this->collectionFactory->create();
+        foreach ($collection as $item) {
+            $sum = $item->getCoins();
+            $total += $sum;
+        }
+        return $total;
     }
 }
