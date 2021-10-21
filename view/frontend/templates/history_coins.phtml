@@ -1,0 +1,55 @@
+<?php
+/** @var \Kirill\Coins\Block\Grid $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+
+<?php
+$collection = $block->getCollection();
+?>
+<div class="table-wrapper coins-history">
+    <table class="data table table-coins-items history" id="my-coins-table">
+        <caption class="table-caption"><?= $escaper->escapeHtml(__('Coins')) ?></caption>
+        <tbody>
+        <tr>
+            <th scope="col" class="col-total"><?= $escaper->escapeHtml(__('Total = ')) ?>
+                <?= $block->getTotal() ?>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-wrapper coins-history">
+    <table class="data table table-coins-items history" id="my-coins-table">
+        <caption class="table-caption"><?= $escaper->escapeHtml(__('Coins')) ?></caption>
+        <thead>
+        <tr>
+            <th scope="col" class="col-id"><?= $escaper->escapeHtml(__('Transaction Id')) ?></th>
+            <th scope="col" class="col-order-id"><?= $escaper->escapeHtml(__('Order ID')) ?></th>
+            <th scope="col" class="col-comment"><?= $escaper->escapeHtml(__('Comment')) ?></th>
+            <th scope="col" class="col-change"><?= $escaper->escapeHtml(__('Change')) ?></th>
+            <th scope="col" class="col-insertion-date"><?= $escaper->escapeHtml(__('Insertion Date')) ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($collection as $item): ?>
+            <tr>
+                <td data-th="<?= $escaper->escapeHtml(__('ID')) ?>" class="col-id">
+                    <?= $item->getId(); ?>
+                </td>
+                <td data-th="<?= $escaper->escapeHtml(__('Order ID')) ?>" class="col-order-id">
+                    <?= $item->getOrderId(); ?>
+                </td>
+                <td data-th="<?= $escaper->escapeHtml(__('Comment')) ?>" class="col-comment">
+                    <?= $item->getComment(); ?>
+                </td>
+                <td data-th="<?= $escaper->escapeHtml(__('Charge')) ?>" class="col-charge">
+                    <?= $block->getSignCoins($item) ?>
+                </td>
+                <td data-th="<?= $escaper->escapeHtml(__('Insertion Date')) ?>" class="col-insertion-date">
+                    <?= $item->getInsertionDate(); ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

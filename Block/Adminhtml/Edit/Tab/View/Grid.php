@@ -36,7 +36,7 @@ class Grid extends Extended
     {
         parent::_construct();
         $this->setId('coins');
-        $this->setDefaultSort('created_at', 'desc');
+        $this->setDefaultSort('id', 'asc');
         $this->setSortable(false);
         $this->setPagerVisibility(false);
         $this->setFilterVisibility(false);

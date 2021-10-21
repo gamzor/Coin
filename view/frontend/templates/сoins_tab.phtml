@@ -1,0 +1,11 @@
+<?php
+/** @var $block \Magento\Framework\View\Element\Html\Links
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+<nav class="account-nav">
+    <li class="nav item">
+        <a href="<?= $escaper->escapeUrl($block->getUrl('coins/history')) ?>">
+            <span><?= $escaper->escapeHtml(__('Coins')) ?></span></a>
+    </li>
+</nav>
