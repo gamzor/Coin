@@ -44,14 +44,44 @@ class WasteCoinsFromOrder implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        $quoteMethod = $observer->getOrder()->getPayment()->getMethod();
-        $Subtotal = $observer->getOrder()->getSubtotal();
-        $customerId = $observer->getOrder()->getCustomerId();
+        $quoteMethod = $this->getMethod($observer);
+        $subtotal = $this->getSubtotal($observer);
+        $customerId = $this->getCustomer($observer)->getId();
         $orderId = $observer->getOrder()->getId();
         if ($customerId && $quoteMethod == 'coins_payment_option') {
-            $savedata = $this->coinsRepository->getNewInstance();
-            $savedata->addData(['coins' => -$Subtotal, 'order_id' => $orderId, 'customer_id' => $customerId, 'comment' => 'Waste Coins from Order']);
-            $this->coinsRepository->save($savedata);
+            $this->SaveCoins($subtotal,$orderId,$customerId);
         }
+    }
+    /** Check method from configuration
+     * @param $observer
+     * @return mixed
+     */
+    public function getMethod($observer)
+    {
+        return $observer->getOrder()->getPayment()->getMethod();
+    }
+
+    /** Check subtotal order
+     * @param $observer
+     * @return mixed
+     */
+    public function getSubtotal($observer)
+    {
+        return $observer->getOrder()->getSubtotal();
+    }
+
+    /** Identify the current customer
+     * @param $observer
+     * @return mixed
+     */
+    public function getCustomer($observer)
+    {
+        return $observer->getQuote()->getCustomer();
+    }
+    public function SaveCoins($subtotal,$orderId,$customerId)
+    {
+        $savedata = $this->coinsRepository->getNewInstance();
+        $savedata->addData(['coins' => -$subtotal, 'order_id' => $orderId, 'customer_id' => $customerId, 'comment' => 'Earn Coins from Order']);
+        return $this->coinsRepository->save($savedata);
     }
 }

@@ -44,21 +44,74 @@ class SaveCoinsFromOrder implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        $quoteMethod = $observer->getOrder()->getPayment()->getMethod();
-        $order = $observer->getOrder()->getSubtotal();
-        $customer = $observer->getQuote()->getCustomer();
-        $oldcustomerCoins = $customer->getCustomAttributes()['coins']->getValue();
+        $quoteMethod = $this->getMethod($observer);
+        $order = $this->getSubtotal($observer);
+        $customer = $this->getCustomer($observer);
         $customerId = $customer->getId();
         $orderId = $observer->getOrder()->getId();
         $percent = 100 / ($this->helper->getPercent());
         $coins = (int)($order / $percent);
         if ($customerId && $quoteMethod != 'coins_payment_option') {
-            $savedata = $this->coinsRepository->getNewInstance();
-            $savedata->addData(['coins' => $coins, 'order_id' => $orderId, 'customer_id' => $customerId, 'comment' => 'Earn Coins from Order']);
-            $this->coinsRepository->save($savedata);
-            $newcustomerCoins = $customer->setCustomAttribute('coins',$oldcustomerCoins+$coins);
-            $this->customerRepository->save($newcustomerCoins);
-
+           $this->SaveCoins($coins,$orderId,$customerId);
+           $this->SaveCoinsForCustomer($customer,$coins);
         }
     }
+
+    /** Check method from configuration
+     * @param $observer
+     * @return mixed
+     */
+    public function getMethod($observer)
+    {
+        return $observer->getOrder()->getPayment()->getMethod();
+    }
+
+    /** Check subtotal order
+     * @param $observer
+     * @return mixed
+     */
+    public function getSubtotal($observer)
+    {
+       return $observer->getOrder()->getSubtotal();
+    }
+
+    /** Identify the current customer
+     * @param $observer
+     * @return mixed
+     */
+    public function getCustomer($observer)
+    {
+       return $observer->getQuote()->getCustomer();
+    }
+
+    /** Create row in table Coins
+     * @param $coins
+     * @param $orderId
+     * @param $customerId
+     * @return \Kirill\Coins\Api\Data\CoinsInterface|\Kirill\Coins\Model\Coins
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     */
+    public function SaveCoins($coins,$orderId,$customerId)
+    {
+        $savedata = $this->coinsRepository->getNewInstance();
+        $savedata->addData(['coins' => $coins, 'order_id' => $orderId, 'customer_id' => $customerId, 'comment' => 'Earn Coins from Order']);
+        return $this->coinsRepository->save($savedata);
+    }
+
+    /** Get Customer Coins
+     * @param $customer
+     * @return mixed
+     */
+    public function getOldCustomerCoins($customer)
+    {
+        return $customer->getCustomAttributes()['coins']->getValue();
+    }
+
+    public function SaveCoinsForCustomer($customer,$coins)
+    {
+        $oldcustomerCoins = $this->getOldCustomerCoins($customer);
+        $savecustomerCoins = $customer->setCustomAttribute('coins',$oldcustomerCoins+$coins);
+      return $this->customerRepository->save($savecustomerCoins);
+    }
+
 }
