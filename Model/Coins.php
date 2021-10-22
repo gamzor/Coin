@@ -18,16 +18,12 @@ class Coins extends AbstractModel implements CoinsInterface
         $this->_init('Kirill\Coins\Model\ResourceModel\Coins');
     }
 
+    /**
+     * @return string[]
+     */
     public function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
-    }
-
-    public function getDefaultValues()
-    {
-        $values = [];
-
-        return $values;
     }
     /**
      * @inheritdoc

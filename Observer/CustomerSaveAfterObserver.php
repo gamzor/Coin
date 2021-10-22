@@ -19,9 +19,12 @@ class CustomerSaveAfterObserver implements ObserverInterface
     protected $coinsRepository;
 
     /**
-     * Constructor
      *
      * @param \Kirill\Coins\Model\CoinsRepository $coinsRepository
+     * @param CustomerRepository $customerRepository
+     * @param LoggerInterface $logger
+     * @param Session $customerSession
+     * @param ManagerInterface $manager
      */
     public function __construct(
         CoinsRepository    $coinsRepository,
