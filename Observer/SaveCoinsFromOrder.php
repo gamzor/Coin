@@ -44,21 +44,18 @@ class SaveCoinsFromOrder implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        $quoteMethod = $observer->getOrder()->getPayment()->getMethod();
-        $order = $observer->getOrder()->getSubtotal();
-        $customer = $observer->getQuote()->getCustomer();
-        $oldcustomerCoins = $customer->getCustomAttributes()['coins']->getValue();
+        $quoteMethod = $this->coinsRepository->getMethod($observer);
+        $order = $this->coinsRepository->getSubtotal($observer);
+        $customer = $this->coinsRepository->getCustomer($observer);
         $customerId = $customer->getId();
         $orderId = $observer->getOrder()->getId();
         $percent = 100 / ($this->helper->getPercent());
         $coins = (int)($order / $percent);
         if ($customerId && $quoteMethod != 'coins_payment_option') {
-            $savedata = $this->coinsRepository->getNewInstance();
-            $savedata->addData(['coins' => $coins, 'order_id' => $orderId, 'customer_id' => $customerId, 'comment' => 'Earn Coins from Order']);
-            $this->coinsRepository->save($savedata);
-            $newcustomerCoins = $customer->setCustomAttribute('coins',$oldcustomerCoins+$coins);
-            $this->customerRepository->save($newcustomerCoins);
-
+           $this->coinsRepository->Savecoins($coins,$orderId,$customerId);
+            $oldcustomerCoins = $this->coinsRepository->getOldcustomercoins($customer);
+            $savecustomerCoins = $customer->setCustomAttribute('coins',$oldcustomerCoins+$coins);
+            $this->customerRepository->save($savecustomerCoins);
         }
     }
 }

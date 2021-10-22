@@ -2,7 +2,6 @@
 
 namespace Kirill\Coins\Observer;
 
-use Kirill\Coins\Helper\Data;
 use Magento\Customer\Model\ResourceModel\CustomerRepository;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Sales\Model\Order;
@@ -20,22 +19,16 @@ class WasteCoinsFromOrder implements ObserverInterface
      * @var CoinsRepository
      */
     private CoinsRepository $coinsRepository;
-    /**
-     * @var Data
-     */
-    private Data $helper;
 
     public function __construct(
         Order                        $order,
         CoinsRepository               $coinsRepository,
-        CustomerRepository $customerRepository,
-        Data                         $helper
+        CustomerRepository $customerRepository
     )
     {
         $this->order = $order;
         $this->coinsRepository = $coinsRepository;
         $this->customerRepository = $customerRepository;
-        $this->helper = $helper;
     }
 
     /** Waste coins after order
@@ -44,14 +37,13 @@ class WasteCoinsFromOrder implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        $quoteMethod = $observer->getOrder()->getPayment()->getMethod();
-        $Subtotal = $observer->getOrder()->getSubtotal();
-        $customerId = $observer->getOrder()->getCustomerId();
+        $quoteMethod = $this->coinsRepository->getMethod($observer);
+        $subtotal = $this->coinsRepository->getSubtotal($observer);
+        $customerId = $this->coinsRepository->getCustomer($observer)->getId();
         $orderId = $observer->getOrder()->getId();
         if ($customerId && $quoteMethod == 'coins_payment_option') {
-            $savedata = $this->coinsRepository->getNewInstance();
-            $savedata->addData(['coins' => -$Subtotal, 'order_id' => $orderId, 'customer_id' => $customerId, 'comment' => 'Waste Coins from Order']);
-            $this->coinsRepository->save($savedata);
+            $this->coinsRepository->Savecoins(-$subtotal,$orderId,$customerId);
         }
     }
+
 }
