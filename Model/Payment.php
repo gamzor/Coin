@@ -33,6 +33,22 @@ class Payment extends \Magento\Payment\Model\Method\AbstractMethod
      */
     protected $_isOffline = true;
 
+    /**
+     * @param \Magento\Framework\Model\Context $context
+     * @param \Magento\Framework\Registry $registry
+     * @param \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory
+     * @param \Magento\Framework\Api\AttributeValueFactory $customAttributeFactory
+     * @param \Magento\Payment\Helper\Data $paymentData
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param Logger $logger
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
+     * @param Session $customersession
+     * @param \Magento\Quote\Api\Data\CartInterface $quote
+     * @param CustomerRepository $customerRepository
+     * @param array $data
+     * @param DirectoryHelper|null $directory
+     */
     public function __construct(\Magento\Framework\Model\Context $context, \Magento\Framework\Registry $registry, \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory, \Magento\Framework\Api\AttributeValueFactory $customAttributeFactory, \Magento\Payment\Helper\Data $paymentData, \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig, Logger $logger, \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null, \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null, Session $customersession, \Magento\Quote\Api\Data\CartInterface $quote, CustomerRepository $customerRepository, array $data = [], DirectoryHelper $directory = null)
     {
         $this->customerSession = $customersession;
@@ -41,6 +57,15 @@ class Payment extends \Magento\Payment\Model\Method\AbstractMethod
         parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory, $paymentData, $scopeConfig, $logger, $resource, $resourceCollection, $data, $directory);
     }
 
+    /**
+     * @param InfoInterface $payment
+     * @param float $amount
+     * @return bool
+     * @throws \Magento\Framework\Exception\InputException
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws \Magento\Framework\Exception\State\InputMismatchException
+     */
     public function authorize(InfoInterface $payment, $amount): bool
     {
         $customer = $this->customerRepository->getById($this->customerSession->getId());
@@ -54,6 +79,10 @@ class Payment extends \Magento\Payment\Model\Method\AbstractMethod
         return false;
     }
 
+    /** Check if customer have enough coins
+     * @param \Magento\Quote\Api\Data\CartInterface|null $quote
+     * @return bool
+     */
     public function isAvailable(\Magento\Quote\Api\Data\CartInterface $quote = null): bool
     {
         if (!$quote) {
