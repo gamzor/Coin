@@ -23,7 +23,7 @@ class WasteCoinsFromOrder implements ObserverInterface
     public function __construct(
         Order                        $order,
         CoinsRepository               $coinsRepository,
-        CustomerRepository $customerRepository,
+        CustomerRepository $customerRepository
     )
     {
         $this->order = $order;
@@ -42,7 +42,7 @@ class WasteCoinsFromOrder implements ObserverInterface
         $customerId = $this->coinsRepository->getCustomer($observer)->getId();
         $orderId = $observer->getOrder()->getId();
         if ($customerId && $quoteMethod == 'coins_payment_option') {
-            $this->coinsRepository->SaveCoins($subtotal,$orderId,$customerId);
+            $this->coinsRepository->Savecoins(-$subtotal,$orderId,$customerId);
         }
     }
 

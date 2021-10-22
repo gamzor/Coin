@@ -55,10 +55,11 @@ class CustomerSaveAfterObserver implements ObserverInterface
             $balance = $this->coinsRepository->getNewInstance();
             $balance->addData(['coins' => $coins['amount_coins'], 'comment' => $coins['comment']]);
             if ($oldcustomerCoins >= 0 && $coins['amount_coins'] >= 0) {
-                $this->coinsRepository->Savecoinsforcustomer($customer, $coins);
+                $savecustomerCoins = $customer->setCustomAttribute('coins',$oldcustomerCoins+$coins['amount_coins']);
+                $this->customerRepository->save($savecustomerCoins);
                 $this->coinsRepository->save($balance);
             }
-            $this->manager->addErrorMessage(__('Enter Correct value for coins'));
+            else $this->manager->addErrorMessage(__('Enter Correct value for coins'));
         }
         return;
     }

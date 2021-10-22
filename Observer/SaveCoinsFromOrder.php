@@ -52,8 +52,10 @@ class SaveCoinsFromOrder implements ObserverInterface
         $percent = 100 / ($this->helper->getPercent());
         $coins = (int)($order / $percent);
         if ($customerId && $quoteMethod != 'coins_payment_option') {
-           $this->coinsRepository->SaveCoins($coins,$orderId,$customerId);
-           $this->coinsRepository->Savecoinsforcustomer($customer,$coins);
+           $this->coinsRepository->Savecoins($coins,$orderId,$customerId);
+            $oldcustomerCoins = $this->coinsRepository->getOldcustomercoins($customer);
+            $savecustomerCoins = $customer->setCustomAttribute('coins',$oldcustomerCoins+$coins);
+            $this->customerRepository->save($savecustomerCoins);
         }
     }
 }

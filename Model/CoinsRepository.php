@@ -145,10 +145,10 @@ class CoinsRepository implements CoinsRepositoryInterface
      * @return CoinsInterface|Coins
      * @throws CouldNotSaveException
      */
-    public function SaveCoins($subtotal,$orderId,$customerId)
+    public function Savecoins($subtotal,$orderId,$customerId)
     {
         $savedata = $this->getNewInstance();
-        $savedata->addData(['coins' => -$subtotal, 'order_id' => $orderId, 'customer_id' => $customerId, 'comment' => 'Earn Coins from Order']);
+        $savedata->addData(['coins' => $subtotal, 'order_id' => $orderId, 'customer_id' => $customerId, 'comment' => 'Earn Coins from Order']);
         return $this->save($savedata);
     }
     /** Get Customer Coins
@@ -158,17 +158,5 @@ class CoinsRepository implements CoinsRepositoryInterface
     public function getOldcustomercoins($customer)
     {
         return $customer->getCustomAttributes()['coins']->getValue();
-    }
-
-    /**
-     * @param $customer
-     * @param int $coins
-     * @return mixed
-     */
-    public function Savecoinsforcustomer($customer, int $coins)
-    {
-        $oldcustomerCoins = $this->getOldcustomercoins($customer);
-        $savecustomerCoins = $customer->setCustomAttribute('coins',$oldcustomerCoins+$coins);
-        return $this->save($savecustomerCoins);
     }
 }
