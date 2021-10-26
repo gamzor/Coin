@@ -34,19 +34,19 @@ $collection = $block->getCollection();
         <?php foreach ($collection as $item): ?>
             <tr>
                 <td data-th="<?= $escaper->escapeHtml(__('ID')) ?>" class="col-id">
-                    <?= $item->getId(); ?>
+                    <?= $escaper->escapeHtml($item->getId()); ?>
                 </td>
                 <td data-th="<?= $escaper->escapeHtml(__('Order ID')) ?>" class="col-order-id">
-                    <?= $item->getOrderId(); ?>
+                    <?= $escaper->escapeHtml($item->getOrderId()); ?>
                 </td>
                 <td data-th="<?= $escaper->escapeHtml(__('Comment')) ?>" class="col-comment">
-                    <?= $item->getComment(); ?>
+                    <?= $escaper->escapeHtml($item->getComment()); ?>
                 </td>
                 <td data-th="<?= $escaper->escapeHtml(__('Charge')) ?>" class="col-charge">
-                    <?= $block->getSignCoins($item) ?>
+                    <?= $block->getSignCoins($item)?>
                 </td>
                 <td data-th="<?= $escaper->escapeHtml(__('Insertion Date')) ?>" class="col-insertion-date">
-                    <?= $item->getInsertionDate(); ?>
+                    <?= $escaper->escapeHtml($item->getInsertionDate()); ?>
                 </td>
             </tr>
         <?php endforeach; ?>

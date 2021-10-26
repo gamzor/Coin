@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 
 namespace Kirill\Coins\Model;
 
@@ -69,7 +65,7 @@ class Payment extends \Magento\Payment\Model\Method\AbstractMethod
     public function authorize(InfoInterface $payment, $amount): bool
     {
         $customer = $this->customerRepository->getById($this->customerSession->getId());
-        if (!$customer) {
+        if ($customer->getId()) {
             $subtotal = $payment->getOrder()->getSubtotal();
             $oldcustomercoins = $customer->getCustomAttribute('coins')->getValue();
             $newcustomercoins = $customer->setCustomAttribute('coins', $oldcustomercoins - $subtotal);

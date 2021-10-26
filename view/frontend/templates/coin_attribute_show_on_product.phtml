@@ -1,6 +1,7 @@
 <?php
 /**
  * @var \Kirill\Coins\Block\CoinAttribute $block
+ * @var \Magento\Framework\Escaper $escaper
  */
 ?>
 <?php $price =$block->getPrice();
@@ -9,6 +10,6 @@
         $percent = 100 / ($block->getPercent()) ?>
 <?php if ($customerId && $status) : ?>
     <ul class="product-icons">
-        <h4>You Can Earn <?= (int)($price / $percent); ?> Coins For Buying Product</h4>
+        <h4><?= $escaper->escapeHtml(__('You Can Earn  '))?><?= (int)($price / $percent); ?> <?= $escaper->escapeHtml(__('Coins For Buying Product'))?></h4>
     </ul>
 <?php endif; ?>

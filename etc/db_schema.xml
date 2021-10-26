@@ -15,6 +15,9 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
         </constraint>
+        <constraint xsi:type="foreign" referenceId="COINS_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID"
+                    table="coins" column="customer_id" referenceTable="customer_entity"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
     </table>
     <table name="customer_entity" resource="default" engine="innodb" comment="Customer Entity">
         <column xsi:type="varchar" name="coins_amount" nullable="true" length="255" comment="Customer Coins"/>
