@@ -58,11 +58,11 @@ class CustomerSaveAfterObserver implements ObserverInterface
         $customer = $observer->getCustomer();
         $customerId = $customer->getId();
         if (!($coins['amount_coins'] == "" && $coins['comment'] == "")) {
-            $oldcustomerCoins = $this->getOldcustomercoins($customer);
+            $oldCustomerCoins = $this->getOldCustomerCoins($customer);
             $balance = $this->coinsRepository->getNewInstance();
             $balance->addData(['coins' => $coins['amount_coins'], 'comment' => $coins['comment'],'customer_id' => $customerId]);
-            if ($oldcustomerCoins >= 0 && $coins['amount_coins'] >= 0) {
-                $savecustomerCoins = $customer->setCustomAttribute('coins',$oldcustomerCoins+$coins['amount_coins']);
+            if ($oldCustomerCoins >= 0 && $coins['amount_coins'] >= 0) {
+                $savecustomerCoins = $customer->setCustomAttribute('coins',$oldCustomerCoins+$coins['amount_coins']);
                 $this->customerRepository->save($savecustomerCoins);
                 $this->coinsRepository->save($balance);
             }
@@ -74,7 +74,7 @@ class CustomerSaveAfterObserver implements ObserverInterface
      * @param $customer
      * @return mixed
      */
-    public function getOldcustomercoins($customer)
+    public function getOldCustomerCoins($customer)
     {
         return $customer->getCustomAttributes()['coins']->getValue();
     }

@@ -24,18 +24,22 @@ class CoinsRepository implements CoinsRepositoryInterface
      */
     private $coinsFactory;
 
+    private ResourceCoins\CollectionFactory $collectionFactory;
+
     /**
      * CoinsRepository constructor.
-     *
+     * @param \Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory $collectionFactory
      * @param \Kirill\Coins\Model\ResourceModel\Coins $resource
      * @param \Kirill\Coins\Model\CoinsFactory $coinsFactory
      */
     public function __construct(
         ResourceCoins $resource,
-        CoinsFactory $coinsFactory
+        CoinsFactory $coinsFactory,
+        \Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory $collectionFactory
     ) {
         $this->resource = $resource;
         $this->coinsFactory = $coinsFactory;
+        $this->collectionFactory = $collectionFactory;
     }
 
     /**

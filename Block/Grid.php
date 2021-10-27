@@ -49,7 +49,7 @@ class Grid extends Template implements ArgumentInterface
     public function getTotal(): int
     {
         $total = 0;
-        $collection = $this->collectionFactory->create();
+        $collection = $this->getCollection();
         foreach ($collection as $item) {
             $sum = $item->getCoins();
             $total += $sum;

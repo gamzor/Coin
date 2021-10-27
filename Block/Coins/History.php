@@ -28,10 +28,10 @@ class History extends Template implements ArgumentInterface
      * @param array $data
      */
     public function __construct(
-        Context                         $context,
-        Session $customerSession,
-        CollectionFactory               $collectionFactory,
-        array                           $data = []
+        Context           $context,
+        Session           $customerSession,
+        CollectionFactory $collectionFactory,
+        array             $data = []
     )
     {
         $this->collectionFactory = $collectionFactory;
@@ -40,7 +40,7 @@ class History extends Template implements ArgumentInterface
     }
 
     /**
-     * Get collection of books
+     * Get collection of coins
      *
      * @return \Kirill\Coins\Model\ResourceModel\Coins\Collection
      */
@@ -59,12 +59,11 @@ class History extends Template implements ArgumentInterface
     }
 
     /** Sum of coins
-     * @return int
+     * @return \Magento\Framework\DataObject[]
      */
     public function getTotal()
-    {
-        $total = 0;
-        $collection = $this->collectionFactory->create();
+    {   $total = 0;
+        $collection = $this->getCollection();
         foreach ($collection as $item) {
             $sum = $item->getCoins();
             $total += $sum;

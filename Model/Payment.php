@@ -5,10 +5,17 @@ namespace Kirill\Coins\Model;
 use Magento\Customer\Model\ResourceModel\CustomerRepository;
 use Magento\Customer\Model\Session;
 use Magento\Directory\Helper\Data as DirectoryHelper;
+use Magento\Framework\Api\AttributeValueFactory;
+use Magento\Framework\Api\ExtensionAttributesFactory;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Registry;
+use Magento\Payment\Helper\Data;
 use Magento\Payment\Model\InfoInterface;
 use Magento\Payment\Model\Method\Logger;
-use Magento\Quote\Model\Quote;
-
+use Magento\Quote\Api\Data\CartInterface;
 class Payment extends \Magento\Payment\Model\Method\AbstractMethod
 {
     const CODE = 'coins_payment_option';
@@ -45,7 +52,21 @@ class Payment extends \Magento\Payment\Model\Method\AbstractMethod
      * @param array $data
      * @param DirectoryHelper|null $directory
      */
-    public function __construct(\Magento\Framework\Model\Context $context, \Magento\Framework\Registry $registry, \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory, \Magento\Framework\Api\AttributeValueFactory $customAttributeFactory, \Magento\Payment\Helper\Data $paymentData, \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig, Logger $logger, \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null, \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null, Session $customersession, \Magento\Quote\Api\Data\CartInterface $quote, CustomerRepository $customerRepository, array $data = [], DirectoryHelper $directory = null)
+    public function __construct(
+        Context $context,
+        Registry $registry,
+        ExtensionAttributesFactory $extensionFactory,
+        AttributeValueFactory $customAttributeFactory,
+        Data $paymentData,
+        ScopeConfigInterface $scopeConfig,
+        Logger $logger,
+        AbstractResource $resource = null,
+        AbstractDb $resourceCollection = null,
+        Session $customersession,
+        CartInterface $quote,
+        CustomerRepository $customerRepository,
+        array $data = [],
+        DirectoryHelper $directory = null)
     {
         $this->customerSession = $customersession;
         $this->quote = $quote;

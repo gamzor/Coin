@@ -111,11 +111,21 @@ class Form extends Generic
     public function getTotal()
     {
         $total = 0;
-        $collection = $this->collectionFactory->create();
+        $collection = $this->getCollection();
         foreach ($collection as $item) {
             $sum = $item->getCoins();
             $total += $sum;
         }
         return $total;
+    }
+    /**
+     * Get collection of coins
+     *
+     * @return \Kirill\Coins\Model\ResourceModel\Coins\Collection
+     */
+    public function getCollection()
+    {
+        //@todo create logic for getting all records from database
+        return $this->collectionFactory->create();
     }
 }

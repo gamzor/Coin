@@ -16,5 +16,4 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     {
         $this->_init('Kirill\Coins\Model\Coins', 'Kirill\Coins\Model\ResourceModel\Coins');
     }
-
 }

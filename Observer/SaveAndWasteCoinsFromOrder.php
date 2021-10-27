@@ -53,10 +53,10 @@ class SaveAndWasteCoinsFromOrder implements ObserverInterface
         $orderId = $order->getId();
         $subtotal = $this->getSubtotal($observer);
         $coins = $this->getCoinsForOrder($subtotal);
-        $OldCustomerCoins = $this->getOldCustomerCoins($customer);
+        $oldCustomerCoins = $this->getOldCustomerCoins($customer);
         if ($customerId && $quoteMethod != 'coins_payment_option') {
             $this->setCoins($coins, $orderId, $customerId,'Earn Coins From Order');
-            $SaveCustomerCoins = $customer->setCustomAttribute('coins', $OldCustomerCoins + $coins);
+            $SaveCustomerCoins = $customer->setCustomAttribute('coins', $oldCustomerCoins + $coins);
             $this->customerRepository->save($SaveCustomerCoins);
         } else {
                 $this->setCoins(-$subtotal,$orderId,$customerId,'Waste Coins From Order');

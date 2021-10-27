@@ -25,7 +25,7 @@ class Data extends AbstractHelper
      */
     public function isEnabled()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_ACTIVE, ScopeInterface::SCOPE_STORE) == 1;
+        return $this->scopeConfig->isSetFlag(self::XML_PATH_ACTIVE, ScopeInterface::SCOPE_STORE);
     }
 
     /**

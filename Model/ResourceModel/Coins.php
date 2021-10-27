@@ -16,5 +16,4 @@ class Coins extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     {
         $this->_init('coins', 'id');
     }
-
 }
