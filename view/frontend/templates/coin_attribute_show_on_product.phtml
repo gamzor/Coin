@@ -2,10 +2,10 @@
 /**
  * @var \Kirill\Coins\Block\CoinAttribute $block
  * @var \Magento\Framework\Escaper $escaper
- * @var \Kirill\Coins\Helper\Data $helper
  */
 ?>
-<?php $price = $block->getPrice();
+<?php $helper = $this->helper('Kirill\Coins\Helper\Data');
+        $price = $block->getPrice();
         $status = $helper->isEnabled();
         $customerId = $block->getCustomerId();
         $percent = 100 / ($helper->getPercent()) ?>
