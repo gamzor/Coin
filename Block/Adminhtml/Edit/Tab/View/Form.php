@@ -39,6 +39,7 @@ class Form extends Generic
         \Magento\Customer\Model\CustomerFactory                   $customerFactory,
         \Magento\Store\Model\System\Store                         $systemStore,
         \Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory $collectionFactory,
+        \Kirill\Coins\Model\CoinsRepository $coinsRepository,
         array                                                     $data = []
     )
     {
@@ -46,6 +47,7 @@ class Form extends Generic
         $this->_systemStore = $systemStore;
         $this->_customerFactory = $customerFactory;
         $this->collectionFactory = $collectionFactory;
+        $this->coinsRepository = $coinsRepository;
         parent::__construct($context, $registry, $formFactory, $data);
     }
 
@@ -98,34 +100,10 @@ class Form extends Generic
                 'label' => __('Total'),
                 'title' => __('Total'),
                 'data-form-part' => $this->getData('target_form'),
-                'value' => $this->getTotal()
+                'value' => $this->coinsRepository->getTotalAmount($this->_coreRegistry->registry('current_customer_id'))
             ]
         );
         $this->setForm($form);
         return $this;
-    }
-
-    /** Get total coins for customer
-     * @return int
-     */
-    public function getTotal()
-    {
-        $total = 0;
-        $collection = $this->getCollection();
-        foreach ($collection as $item) {
-            $sum = $item->getCoins();
-            $total += $sum;
-        }
-        return $total;
-    }
-    /**
-     * Get collection of coins
-     *
-     * @return \Kirill\Coins\Model\ResourceModel\Coins\Collection
-     */
-    public function getCollection()
-    {
-        //@todo create logic for getting all records from database
-        return $this->collectionFactory->create();
     }
 }

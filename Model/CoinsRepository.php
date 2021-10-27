@@ -14,6 +14,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
  */
 class CoinsRepository implements CoinsRepositoryInterface
 {
+
     /**
      * @var \Kirill\Coins\Model\ResourceModel\Coins
      */
@@ -23,8 +24,10 @@ class CoinsRepository implements CoinsRepositoryInterface
      * @var \Kirill\Coins\Model\CoinsFactory
      */
     private $coinsFactory;
-
-    private ResourceCoins\CollectionFactory $collectionFactory;
+    /**
+     * @var ResourceCoins\CollectionFactory
+     */
+    private $collectionFactory;
 
     /**
      * CoinsRepository constructor.
@@ -116,5 +119,9 @@ class CoinsRepository implements CoinsRepositoryInterface
     public function getNewInstance()
     {
         return $this->coinsFactory->create();
+    }
+    public function getTotalAmount($customerId)
+    {
+       return $this->resource->getTotalAmount($customerId) ? : 0;
     }
 }

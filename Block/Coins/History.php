@@ -2,6 +2,7 @@
 
 namespace Kirill\Coins\Block\Coins;
 
+use Kirill\Coins\Model\CoinsRepository;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory;
@@ -31,11 +32,13 @@ class History extends Template implements ArgumentInterface
         Context           $context,
         Session           $customerSession,
         CollectionFactory $collectionFactory,
+        CoinsRepository $coinsRepository,
         array             $data = []
     )
     {
         $this->collectionFactory = $collectionFactory;
         $this->customerSession = $customerSession;
+        $this->coinsRepository = $coinsRepository;
         parent::__construct($context, $data);
     }
 
@@ -58,16 +61,11 @@ class History extends Template implements ArgumentInterface
         return $this->customerSession->getCustomer()->getCoins();
     }
 
-    /** Sum of coins
-     * @return \Magento\Framework\DataObject[]
+    /**
+     * @return int|string
      */
     public function getTotal()
-    {   $total = 0;
-        $collection = $this->getCollection();
-        foreach ($collection as $item) {
-            $sum = $item->getCoins();
-            $total += $sum;
-        }
-        return $total;
+    {
+        return $this->coinsRepository->getTotalAmount($this->customerSession->getId());
     }
 }
