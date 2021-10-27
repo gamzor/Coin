@@ -59,22 +59,6 @@ class CoinAttribute extends Template
         return $this->getProduct()->getPriceInfo()->getPrice('final_price')->getValue();
     }
 
-    /** Check if configuration is active
-     * @return bool
-     */
-    public function isEnabled()
-    {
-        return $this->helper->isEnabled();
-    }
-
-    /** Receive percent from configuration
-     * @return int
-     */
-    public function getPercent()
-    {
-        return $this->helper->getPercent();
-    }
-
     /**
      * @return \Magento\Customer\Model\Customer
      */
