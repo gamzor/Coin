@@ -17,7 +17,13 @@ class Grid extends Extended
      * @var CollectionFactory
      */
     protected $collectionFactory;
-
+    /**
+     * @param Context $context
+     * @param Data $backendHelper
+     * @param CollectionFactory $collectionFactory
+     * @param Registry $coreRegistry
+     * @param array $data
+     */
     public function __construct(
         Context           $context,
         Data              $backendHelper,
@@ -30,9 +36,10 @@ class Grid extends Extended
         $this->_collectionFactory = $collectionFactory;
         parent::__construct($context, $backendHelper, $data);
     }
-
-    protected
-    function _construct()
+    /**
+     * @throws \Magento\Framework\Exception\FileSystemException
+     */
+    protected function _construct()
     {
         parent::_construct();
         $this->setId('coins');
@@ -42,7 +49,6 @@ class Grid extends Extended
         $this->setFilterVisibility(false);
         $this->setEmptyText('No Coins Change');
     }
-
     /** Collection on Grid
      *
      * @return Grid
@@ -53,7 +59,6 @@ class Grid extends Extended
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
-
     /** Prepare grid columns
      *
      * @return Grid

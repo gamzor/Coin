@@ -66,9 +66,9 @@ class Coins  extends Template implements TabInterface
     public function isHidden()
     {
         if ($this->getCustomerId()) {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
     /**
      * Tab class getter

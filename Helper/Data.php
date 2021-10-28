@@ -10,26 +10,19 @@ use Magento\Framework\App\Helper\AbstractHelper;
  */
 class Data extends AbstractHelper
 {
-    /**
-     * XML configuration paths
+    /** XML configuration paths
      */
     const XML_PATH_ACTIVE = 'coins/general/active';
 
     const XML_PATH_PERCENT = 'coins/general/percent';
-
-
-    /**
-     * Check whether customer balance functionality should be enabled
-     *
+    /** Check whether customer balance functionality should be enabled
      * @return bool
      */
     public function isEnabled()
     {
         return $this->scopeConfig->isSetFlag(self::XML_PATH_ACTIVE, ScopeInterface::SCOPE_STORE);
     }
-
-    /**
-     * Get percent from configuration
+    /** Get percent from configuration
      * @return int
      */
     public function getPercent()

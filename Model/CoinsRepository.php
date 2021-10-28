@@ -8,18 +8,16 @@ use Kirill\Coins\Model\ResourceModel\Coins as ResourceCoins;
 use Kirill\Coins\Api\Data\CoinsInterface;
 use Kirill\Coins\Model\CoinsFactory;
 use Magento\Framework\Exception\NoSuchEntityException;
-
+use \Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory;
 /**
  * Class BooksRepository. CRUD's operation with object
  */
 class CoinsRepository implements CoinsRepositoryInterface
 {
-
     /**
      * @var \Kirill\Coins\Model\ResourceModel\Coins
      */
     private $resource;
-
     /**
      * @var \Kirill\Coins\Model\CoinsFactory
      */
@@ -28,7 +26,6 @@ class CoinsRepository implements CoinsRepositoryInterface
      * @var ResourceCoins\CollectionFactory
      */
     private $collectionFactory;
-
     /**
      * CoinsRepository constructor.
      * @param \Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory $collectionFactory
@@ -38,16 +35,13 @@ class CoinsRepository implements CoinsRepositoryInterface
     public function __construct(
         ResourceCoins $resource,
         CoinsFactory $coinsFactory,
-        \Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory $collectionFactory
+        CollectionFactory $collectionFactory
     ) {
         $this->resource = $resource;
         $this->coinsFactory = $coinsFactory;
         $this->collectionFactory = $collectionFactory;
     }
-
-    /**
-     * Save coins data
-     *
+    /** Save coins data
      * @param \Kirill\Coins\Api\Data\CoinsInterface $coins
      * @return \Kirill\Coins\Api\Data\CoinsInterface
      * @throws \Magento\Framework\Exception\CouldNotSaveException
@@ -63,25 +57,22 @@ class CoinsRepository implements CoinsRepositoryInterface
 
         return $coins;
     }
-
-    /**
-     * Retrieve book.
-     *
+    /** Retrieve coins
      * @param int $coinsId
      * @return CoinsInterface|ResourceCoins
+     * @throws NoSuchEntityException
      */
     public function getById($coinsId)
     {
-        $block = $this->coinsFactory->create();
-        $block->getResource()->load($block, $coinsId);
-        if (! $block->getId()) {
+        $coins = $this->coinsFactory->create();
+        $coins->resource->load($coins, $coinsId);
+        if (! $coins->getId()) {
             throw new NoSuchEntityException(__('Unable to find coins with ID "%1"', $coinsId));
         }
-        return $block;
+        return $coins;
     }
-
     /**
-     * Delete Book
+     * Delete Coins
      *
      * @param \Kirill\Coins\Api\Data\CoinsInterface $coins
      * @return bool
@@ -97,7 +88,6 @@ class CoinsRepository implements CoinsRepositoryInterface
         }
         return true;
     }
-
     /**
      * Delete Block by given Block Identity
      *
@@ -110,7 +100,6 @@ class CoinsRepository implements CoinsRepositoryInterface
     {
         return $this->delete($this->getById($coinsId));
     }
-
     /**
      * Get clear model
      *
@@ -120,8 +109,11 @@ class CoinsRepository implements CoinsRepositoryInterface
     {
         return $this->coinsFactory->create();
     }
+    /** Get total amount coins
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     public function getTotalAmount($customerId)
     {
-       return $this->resource->getTotalAmount($customerId) ? : 0;
+       return $this->resource->getTotalAmount($customerId);
     }
 }

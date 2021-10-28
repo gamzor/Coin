@@ -4,7 +4,6 @@ namespace Kirill\Coins\Model;
 
 use Kirill\Coins\Api\Data\CoinsInterface;
 use Magento\Framework\Model\AbstractModel;
-use Kirill\Coins\Model\ResourceModel\Coins as ResourceCoins;
 
 class Coins extends AbstractModel implements CoinsInterface
 {

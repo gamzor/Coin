@@ -38,7 +38,6 @@ class Grid extends Template implements ArgumentInterface
         $this->coinsRepository = $coinsRepository;
         parent::__construct($context, $data);
     }
-
     /**
      * Get collection of coins
      *
@@ -56,7 +55,6 @@ class Grid extends Template implements ArgumentInterface
     {
         return $this->coinsRepository->getTotalAmount($this->customerSession->getId());
     }
-
     /** Sign value attribute coins
      * @param $item
      * @return string

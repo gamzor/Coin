@@ -16,7 +16,8 @@ use Magento\Payment\Helper\Data;
 use Magento\Payment\Model\InfoInterface;
 use Magento\Payment\Model\Method\Logger;
 use Magento\Quote\Api\Data\CartInterface;
-class Payment extends \Magento\Payment\Model\Method\AbstractMethod
+use \Magento\Payment\Model\Method\AbstractMethod;
+class Payment extends AbstractMethod
 {
     const CODE = 'coins_payment_option';
 
@@ -88,9 +89,9 @@ class Payment extends \Magento\Payment\Model\Method\AbstractMethod
         $customer = $this->customerRepository->getById($this->customerSession->getId());
         if ($customer->getId()) {
             $subtotal = $payment->getOrder()->getSubtotal();
-            $oldcustomercoins = $customer->getCustomAttribute('coins')->getValue();
-            $newcustomercoins = $customer->setCustomAttribute('coins', $oldcustomercoins - $subtotal);
-            $this->customerRepository->save($newcustomercoins);
+            $currentCustomerCoins = $customer->getCustomAttribute('coins')->getValue();
+            $newCustomerCoins = $customer->setCustomAttribute('coins', $currentCustomerCoins - $subtotal);
+            $this->customerRepository->save($newCustomerCoins);
             return true;
         }
         return false;

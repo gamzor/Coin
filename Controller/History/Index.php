@@ -11,7 +11,6 @@ class Index extends Action
      * @var \Magento\Framework\View\Result\PageFactory
      */
     protected $resultPageFactory;
-
     /**
      * Index constructor.
      *
@@ -23,7 +22,6 @@ class Index extends Action
         parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
     }
-
     /**
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|\Magento\Framework\View\Result\Page
      */

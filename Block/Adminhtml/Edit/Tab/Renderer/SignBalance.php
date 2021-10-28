@@ -14,20 +14,18 @@ class SignBalance extends AbstractRenderer
      */
     public function __construct(
         Context $context,
-        array $data = []
+        array   $data = []
     )
     {
         parent::__construct($context, $data);
     }
-
     /** Sign and color output
-     *
      * @param DataObject $row
      * @return string
      */
     public function render(DataObject $row)
     {
-        return  ($row->getCoins()<0)
+        return ($row->getCoins() < 0)
             ? '<span class="price" style="color:red">' . $row->getCoins() . '</span>'
             : '<span class="price" style="color:green">+' . $row->getCoins() . '</span>';
     }

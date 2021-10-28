@@ -1,11 +1,12 @@
 <?php
 namespace Kirill\Coins\Model\ResourceModel;
 
-
-class Coins extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+use \Magento\Framework\Model\ResourceModel\Db\AbstractDb;
+use \Magento\Framework\Model\ResourceModel\Db\Context;
+class Coins extends AbstractDb
 {
     public function __construct(
-        \Magento\Framework\Model\ResourceModel\Db\Context $context
+        Context $context
     )
     {
         parent::__construct($context);
@@ -15,9 +16,7 @@ class Coins extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     {
         $this->_init('coins', 'id');
     }
-    /**
-     * Get total amount of coins
-     *
+    /** Get total amount of coins
      * @param int $customerId
      * @return string
      * @throws \Magento\Framework\Exception\LocalizedException
@@ -25,14 +24,11 @@ class Coins extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     public function getTotalAmount($customerId)
     {
         $connection = $this->getConnection();
-        return $connection->fetchOne(
-            $connection->select()->from(
-                $this->getMainTable(),
-                'SUM(coins)'
-            )->where(
-                'customer_id = :customer_id'
-            ),
-            ['customer_id' => $customerId]
-        );
+        $tableName = $this->getMainTable();
+
+        $select = $connection->select()->from($tableName,'SUM(coins)')->where('customer_id = :customer_id');
+        $bind = ['customer_id' => $customerId];
+        $amount =  $connection->fetchOne($select,$bind);
+        return max(0,$amount);
     }
 }

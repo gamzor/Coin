@@ -2,7 +2,6 @@
 
 namespace Kirill\Coins\Block;
 
-use Kirill\Coins\Helper\Data;
 use Magento\Catalog\Model\Product;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
@@ -15,26 +14,31 @@ class CoinAttribute extends Template
      * @var Registry
      */
     protected $registry;
-
     /**
      * @var Product
      */
     protected $product;
-
+    /**
+     * @var CustomerSession
+     */
+    private CustomerSession $customerSession;
+    /**
+     * @param Template\Context $context
+     * @param Registry $registry
+     * @param CustomerSession $customerSession
+     * @param array $data
+     */
     public function __construct(
         Template\Context $context,
         Registry         $registry,
-        CustomerSession $customerSession,
-        Data             $helper,
+        CustomerSession  $customerSession,
         array            $data)
     {
         $this->registry = $registry;
-        $this->helper = $helper;
         $this->customerSession = $customerSession;
         parent::__construct($context, $data);
     }
-
-    /**
+    /** Get Product from registry
      * @return Product
      * @throws LocalizedException
      */
@@ -50,7 +54,6 @@ class CoinAttribute extends Template
 
         return $this->product;
     }
-
     /** Price for different types of product
      * @throws LocalizedException
      */
@@ -58,8 +61,7 @@ class CoinAttribute extends Template
     {
         return $this->getProduct()->getPriceInfo()->getPrice('final_price')->getValue();
     }
-
-    /**
+    /** Get Customer Id
      * @return \Magento\Customer\Model\Customer
      */
     public function getCustomerId()
