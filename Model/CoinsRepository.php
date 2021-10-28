@@ -8,7 +8,7 @@ use Kirill\Coins\Model\ResourceModel\Coins as ResourceCoins;
 use Kirill\Coins\Api\Data\CoinsInterface;
 use Kirill\Coins\Model\CoinsFactory;
 use Magento\Framework\Exception\NoSuchEntityException;
-
+use \Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory;
 /**
  * Class BooksRepository. CRUD's operation with object
  */
@@ -18,29 +18,30 @@ class CoinsRepository implements CoinsRepositoryInterface
      * @var \Kirill\Coins\Model\ResourceModel\Coins
      */
     private $resource;
-
     /**
      * @var \Kirill\Coins\Model\CoinsFactory
      */
     private $coinsFactory;
-
+    /**
+     * @var ResourceCoins\CollectionFactory
+     */
+    private $collectionFactory;
     /**
      * CoinsRepository constructor.
-     *
+     * @param \Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory $collectionFactory
      * @param \Kirill\Coins\Model\ResourceModel\Coins $resource
      * @param \Kirill\Coins\Model\CoinsFactory $coinsFactory
      */
     public function __construct(
         ResourceCoins $resource,
-        CoinsFactory $coinsFactory
+        CoinsFactory $coinsFactory,
+        CollectionFactory $collectionFactory
     ) {
         $this->resource = $resource;
         $this->coinsFactory = $coinsFactory;
+        $this->collectionFactory = $collectionFactory;
     }
-
-    /**
-     * Save coins data
-     *
+    /** Save coins data
      * @param \Kirill\Coins\Api\Data\CoinsInterface $coins
      * @return \Kirill\Coins\Api\Data\CoinsInterface
      * @throws \Magento\Framework\Exception\CouldNotSaveException
@@ -56,22 +57,22 @@ class CoinsRepository implements CoinsRepositoryInterface
 
         return $coins;
     }
-
-    /**
-     * Retrieve book.
-     *
+    /** Retrieve coins
      * @param int $coinsId
-     * @return \Kirill\Coins\Api\Data\CoinsInterface
+     * @return CoinsInterface|ResourceCoins
+     * @throws NoSuchEntityException
      */
     public function getById($coinsId)
     {
-        $block = $this->coinsFactory->create();
-        $this->resource->load($block, $coinsId);
-        return $block;
+        $coins = $this->coinsFactory->create();
+        $coins->resource->load($coins, $coinsId);
+        if (! $coins->getId()) {
+            throw new NoSuchEntityException(__('Unable to find coins with ID "%1"', $coinsId));
+        }
+        return $coins;
     }
-
     /**
-     * Delete Book
+     * Delete Coins
      *
      * @param \Kirill\Coins\Api\Data\CoinsInterface $coins
      * @return bool
@@ -87,7 +88,6 @@ class CoinsRepository implements CoinsRepositoryInterface
         }
         return true;
     }
-
     /**
      * Delete Block by given Block Identity
      *
@@ -100,7 +100,6 @@ class CoinsRepository implements CoinsRepositoryInterface
     {
         return $this->delete($this->getById($coinsId));
     }
-
     /**
      * Get clear model
      *
@@ -110,53 +109,11 @@ class CoinsRepository implements CoinsRepositoryInterface
     {
         return $this->coinsFactory->create();
     }
-
-    /** Check method from configuration
-     * @param $observer
-     * @return mixed
+    /** Get total amount coins
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getMethod($observer)
+    public function getTotalAmount($customerId)
     {
-        return $observer->getOrder()->getPayment()->getMethod();
-    }
-
-    /** Check subtotal order
-     * @param $observer
-     * @return mixed
-     */
-    public function getSubtotal($observer)
-    {
-        return $observer->getOrder()->getSubtotal();
-    }
-
-    /** Identify the current customer
-     * @param $observer
-     * @return mixed
-     */
-    public function getCustomer($observer)
-    {
-        return $observer->getQuote()->getCustomer();
-    }
-
-    /**
-     * @param $subtotal
-     * @param $orderId
-     * @param $customerId
-     * @return CoinsInterface|Coins
-     * @throws CouldNotSaveException
-     */
-    public function Savecoins($subtotal,$orderId,$customerId)
-    {
-        $savedata = $this->getNewInstance();
-        $savedata->addData(['coins' => $subtotal, 'order_id' => $orderId, 'customer_id' => $customerId, 'comment' => 'Earn Coins from Order']);
-        return $this->save($savedata);
-    }
-    /** Get Customer Coins
-     * @param $customer
-     * @return mixed
-     */
-    public function getOldcustomercoins($customer)
-    {
-        return $customer->getCustomAttributes()['coins']->getValue();
+       return $this->resource->getTotalAmount($customerId);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Kirill\Coins\Block;
 
+use Kirill\Coins\Model\CoinsRepository;
+use Magento\Customer\Model\Session;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Kirill\Coins\Model\ResourceModel\Coins\CollectionFactory;
@@ -25,14 +27,17 @@ class Grid extends Template implements ArgumentInterface
     public function __construct(
         Context           $context,
         CollectionFactory $collectionFactory,
+        Session $customerSession,
+        CoinsRepository $coinsRepository,
         array             $data = []
 
     )
     {
         $this->collectionFactory = $collectionFactory;
+        $this->customerSession = $customerSession;
+        $this->coinsRepository = $coinsRepository;
         parent::__construct($context, $data);
     }
-
     /**
      * Get collection of coins
      *
@@ -46,17 +51,10 @@ class Grid extends Template implements ArgumentInterface
     /** Get Total coins for customer
      * @return int
      */
-    public function getTotal(): int
+    public function getTotal()
     {
-        $total = 0;
-        $collection = $this->collectionFactory->create();
-        foreach ($collection as $item) {
-            $sum = $item->getCoins();
-            $total += $sum;
-        }
-        return $total;
+        return $this->coinsRepository->getTotalAmount($this->customerSession->getId());
     }
-
     /** Sign value attribute coins
      * @param $item
      * @return string

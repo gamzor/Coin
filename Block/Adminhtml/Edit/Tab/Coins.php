@@ -54,7 +54,10 @@ class Coins  extends Template implements TabInterface
      */
     public function canShowTab()
     {
-        return (bool)$this->getCustomerId();
+        if ($this->getCustomerId()) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -62,7 +65,10 @@ class Coins  extends Template implements TabInterface
      */
     public function isHidden()
     {
-        return (bool)$this->getCustomerId();
+        if ($this->getCustomerId()) {
+            return false;
+        }
+        return true;
     }
     /**
      * Tab class getter

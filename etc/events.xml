@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="adminhtml_customer_save_after">
-        <observer name="coins" instance="Kirill\Coins\Observer\CustomerSaveAfterObserver"/>
+        <observer name="change_coins_for_customer_in_admin" instance="Kirill\Coins\Observer\CustomerSaveAfterObserver"/>
     </event>
     <event name="checkout_submit_all_after">
-        <observer name="save_checkout_submit_all_after" instance="Kirill\Coins\Observer\SaveCoinsFromOrder" />
-        <observer name="waste_checkout_submit_all_after" instance="Kirill\Coins\Observer\WasteCoinsFromOrder" />
+        <observer name="save_and_spend_coins_from_order" instance="Kirill\Coins\Observer\SaveAndSpendCoinsFromOrder" />
     </event>
 </config>
